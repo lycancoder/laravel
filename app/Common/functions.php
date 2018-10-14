@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * 公共方法
  * User: Lycan
  * Date: 2018/10/1
  * Time: 23:36
@@ -35,16 +35,12 @@ function p($str)
  * @email LycanCoder@gmail.com
  * @time 2018/10/1
  *
- * @param int $status     状态
- * @param string $msg     消息
- * @param null $data      数据
+ * @param int $code  状态
+ * @param string msg 消息
+ * @param null $data 数据
  * @return array
  */
-function getStandResult($status = 1, $msg = 'Not Message', $data = null)
+function getStandResult($code = 0, $msg = 'Not Message', $data = null)
 {
-    return array(
-        'status' => $status,
-        'msg'    => $msg,
-        'data'   => $data ? $data : array()
-    );
+    return array('code' => $code, 'msg' => $msg, 'data' => $data ? $data : array());
 }
