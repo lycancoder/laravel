@@ -1,6 +1,7 @@
 <?php
 /**
  * 通过聚合数据平台发送短信
+ * 添加了新的短信模板，需要在setMessage()方法中添加对应的模板内容
  * User: Lycan
  * Date: 2018/10/9
  * Time: 22:52
@@ -24,15 +25,6 @@ class JuheSms
         $this->key = isset($params['key']) ? $params['key'] : ''; // APPKEY
         $this->tpl_id = isset($params['tpl_id']) ? $params['tpl_id'] : ''; // 短信模板ID
         $this->url = 'http://v.juhe.cn/sms/send'; // 短信接口的URL
-    }
-
-    /**
-     * 短信接口的URL
-     * @return string
-     */
-    private function sendUrl()
-    {
-        return $this->url = 'http://v.juhe.cn/sms/send';
     }
 
     /**
