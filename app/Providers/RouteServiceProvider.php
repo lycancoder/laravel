@@ -40,6 +40,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapWebRoutes();
 
         //
+        $this->mapAdminRoutes();
     }
 
     /**
@@ -69,5 +70,17 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * 后台路由文件
+     * @author Lycan LycanCoder@gmail.com
+     * @date 2018-10-19
+     */
+    protected function mapAdminRoutes()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/admin.php'));
     }
 }

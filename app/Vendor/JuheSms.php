@@ -18,9 +18,9 @@ class JuheSms
 
     /**
      * JuheSms constructor.
-     * @param $params
+     * @param array $params
      */
-    public function __construct($params)
+    public function __construct(array $params)
     {
         $this->key = isset($params['key']) ? $params['key'] : ''; // APPKEY
         $this->tpl_id = isset($params['tpl_id']) ? $params['tpl_id'] : ''; // 短信模板ID
@@ -32,7 +32,7 @@ class JuheSms
      * @param array $params
      * @return string
      */
-    private function setMessage($params = array())
+    private function setMessage(array $params)
     {
         switch ($this->tpl_id) {
             case 106343:
@@ -102,7 +102,7 @@ class JuheSms
      * @param array $message 短信内容
      * @return array
      */
-    public function smsSend($phone = '', $message = array())
+    public function smsSend(string $phone, array $message)
     {
         header('content-type:text/html;charset=utf-8');
         $smsConf = array(

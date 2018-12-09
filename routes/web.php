@@ -21,8 +21,3 @@ Route::group(['namespace' => 'Home', 'prefix' => 'home'], function () {
     Route::get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
 });
 
-// Admin 路由组
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
-    // 控制器在 App\Http\Controllers\Admin 命名空间下
-    Route::get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
-});
