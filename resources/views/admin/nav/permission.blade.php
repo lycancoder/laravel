@@ -51,7 +51,7 @@
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <button class="layui-btn" lay-submit="" lay-filter="submit">确 认</button>
-                            <a href=""  class="layui-btn" >返 回</a>
+                            {{--<a href=""  class="layui-btn" >返 回</a>--}}
                         </div>
                     </div>
                 </form>
