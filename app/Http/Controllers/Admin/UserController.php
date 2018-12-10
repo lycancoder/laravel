@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Model\User;
 use App\Model\UserGroup;
+use App\Model\UserLoginLog;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -40,13 +41,10 @@ class UserController extends Controller
         $model = new UserGroup();
         $getData = $request->all();
 
-        // 搜索条件
-        if (isset($getData['name'])) { // 组名
-            $model = $model->where('name', 'like', '%'.$getData['name'].'%');
-        }
-
-        // 查询数据转数组，并对数据进行处理
         $data = $model
+            ->when(isset($getData['name']), function ($query) use ($getData) {
+                return $query->where('name', 'like', '%'.$getData['name'].'%');
+            })
             ->orderBy('sort', 'asc')->orderBy('id', 'asc')
             ->paginate($request->get('limit', 10))
             ->toArray();
@@ -159,19 +157,16 @@ class UserController extends Controller
         $model = new User();
         $getData = $request->all();
 
-        // 搜索条件
-        if (isset($getData['name'])) {
-            $model = $model->where('name', 'like', '%'.$getData['name'].'%');
-        }
-        if (isset($getData['email'])) {
-            $model = $model->where('email', '=', $getData['email']);
-        }
-        if (isset($getData['phone'])) {
-            $model = $model->where('phone', '=', $getData['phone']);
-        }
-
-        // 查询数据转数组，并对数据进行处理
         $data = $model
+            ->when(isset($getData['name']), function ($query) use ($getData) {
+                return $query->where('user.name', 'like', '%'.$getData['name'].'%');
+            })
+            ->when(isset($getData['email']), function ($query) use ($getData) {
+                return $query->where('email', $getData['email']);
+            })
+            ->when(isset($getData['phone']), function ($query) use ($getData) {
+                return $query->where('phone', $getData['phone']);
+            })
             ->orderBy('sort', 'asc')->orderBy('user.id', 'asc')
             ->leftJoin('user_group', function ($join) {
                 $join->on('user.g_id', '=', 'user_group.id');
@@ -300,5 +295,55 @@ class UserController extends Controller
         $ret = $model->updateInfo($getData);
 
         return response()->json($ret);
+    }
+
+    /**
+     * userLoginLogPage 用户登录日志列表页
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2018/12/4
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function userLoginLogPage()
+    {
+        return view('admin.user.userLoginLogPage');
+    }
+
+    /**
+     * userLoginLogPageData 用户登录日志列表页数据
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2018/12/5
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function userLoginLogPageData(Request $request)
+    {
+        $model = new UserLoginLog();
+        $getData = $request->all();
+
+        $data = $model
+            ->when(isset($getData['name']), function ($query) use ($getData) {
+                return $query->where('name', 'like', '%'.$getData['name'].'%');
+            })
+            ->orderBy('user_login_log.created_at', 'desc')
+            ->leftJoin('user', function ($join) {
+                $join->on('user_login_log.u_id', '=', 'user.id');
+            })
+            ->paginate($request->get('limit', 10), [
+                'user.name', 'user_login_log.id', 'ip', 'user_login_log.created_at'
+            ])
+            ->toArray();
+
+        foreach ($data['data'] as $key => $value) {
+            $data['data'][$key]['created_at'] = date('Y-m-d H:i:s', $value['created_at']);
+        }
+
+        return response()->json(array(
+            'code' => 0,
+            'msg' => '加载成功',
+            'count' => $data['total'],
+            'data' => $data['data'],
+        ));
     }
 }

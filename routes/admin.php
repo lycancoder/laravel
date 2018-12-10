@@ -27,6 +27,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::get('/userPage', 'UserController@userPage')->name('admin.user.userPage');
         Route::get('/userPageData', 'UserController@userPageData')->name('admin.user.userPageData');
         Route::get('/userEdit', 'UserController@userEdit')->name('admin.user.userEdit');
+        Route::get('/userLoginLogPage', 'UserController@userLoginLogPage')->name('admin.user.userLoginLogPage');
+        Route::get('/userLoginLogPageData', 'UserController@userLoginLogPageData')->name('admin.user.userLoginLogPageData');
 
         Route::group(['middleware' => 'adminUserPermission'], function () {
             Route::post('/leftNavEditSubmit', 'NavController@leftNavEditSubmit')->name('admin.nav.leftNavEditSubmit');

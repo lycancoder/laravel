@@ -26,22 +26,6 @@ class IndexController extends Controller
      */
     public function index()
     {
-
-        /*$userPermission = session('loginUser')['nav_ids'];
-        $userPermission = explode(',', $userPermission);
-        var_dump($userPermission);
-
-        $LeftNav = new LeftNav();
-        $idArr = $LeftNav->where(['parent_id' => 0, 'status' => 1])->get(['id'])->toArray();
-        $idArr = array_merge(array(0), array_pluck($idArr,'id'));
-        $nav = $LeftNav->whereIn('parent_id' , $idArr)->whereIn('left_nav.id', $userPermission)->where('status', 1)
-            ->orderBy('left_nav.sort', 'asc')->orderBy('left_nav.id', 'asc')
-            ->leftJoin('font_icon', function ($join) {
-                $join->on('left_nav.icon_id', '=', 'font_icon.id');
-            })
-            ->get(['left_nav.id', 'parent_id', 'left_nav.sort', 'target', 'title', 'code', 'url'])
-            ->toArray();
-        var_dump($nav);*/
         return view('admin.index.index');
     }
 

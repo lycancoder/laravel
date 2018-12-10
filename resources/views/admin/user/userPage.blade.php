@@ -5,8 +5,6 @@
     </style>
 
     <body class="body">
-    <input type="hidden" name="parent_id" value="">
-    <input type="hidden" name="grandpa_id" value="">
 
     <!-- 自定义工具集 -->
     <div class="my-btn-box">

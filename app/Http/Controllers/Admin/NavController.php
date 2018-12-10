@@ -55,21 +55,16 @@ class NavController extends Controller
         $model = new LeftNav();
         $getData = $request->all();
 
-        // 父级的父级id
         $grandpa = $model->find($getData['id'], ['parent_id']);
         $grandpa_id = $grandpa->parent_id ?? 0;
 
-        // 搜索条件
-        if (isset($getData['title'])) { // 标题搜索
-            $model = $model->where('title', 'like', '%'.$getData['title'].'%');
-        }
-        if (isset($getData['id'])) { // 父级导航id
-            $model = $model->where('parent_id', '=', $getData['id']);
-        }
-
-
-        // 查询数据转数组，并对数据进行处理
         $data = $model
+            ->when(isset($getData['title']), function ($query) use ($getData) {
+                return $query->where('title', 'like', '%'.$getData['title'].'%');
+            })
+            ->when(isset($getData['id']), function ($query) use ($getData) {
+                return $query->where('parent_id', $getData['id']);
+            })
             ->orderBy('sort', 'asc')->orderBy('left_nav.id', 'desc')
             ->leftJoin('font_icon', function ($join) {
                 $join->on('left_nav.icon_id', '=', 'font_icon.id');
