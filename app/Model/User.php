@@ -149,6 +149,15 @@ class User extends Authenticatable
         return returnCode($bool ? 1 : 0, $bool ? '操作成功' : '操作失败');
     }
 
+    /**
+     * checkLogin 检测用户登录
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2018/12/11
+     *
+     * @param string $data
+     * @param string $type
+     * @return mixed
+     */
     public function checkLogin(string $data, $type = 'email')
     {
         $info = $this
@@ -161,5 +170,28 @@ class User extends Authenticatable
             ->first(['id', 'name', 'email', 'phone', 'password', 'status', 'g_id']);
 
         return $info;
+    }
+
+    /**
+     * changePassword 修改密码
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2018/12/11
+     *
+     * @param int $id
+     * @param string $oldPwd
+     * @param string $newPwd
+     * @return array
+     */
+    public function changePassword(int $id, string $oldPwd, string $newPwd)
+    {
+        $info = $this->where('id', $id)->first(['password']);
+
+        if (!password_verify($oldPwd, $info['password'])) {
+            return returnCode(0, '原密码错误');
+        }
+
+        $num = $this->where('id', $id)->update(['password' => password_hash($newPwd, PASSWORD_DEFAULT)]);
+
+        return returnCode($num ? 1 : 0, $num ? '操作成功' : '操作失败');
     }
 }

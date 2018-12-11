@@ -29,6 +29,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::get('/userEdit', 'UserController@userEdit')->name('admin.user.userEdit');
         Route::get('/userLoginLogPage', 'UserController@userLoginLogPage')->name('admin.user.userLoginLogPage');
         Route::get('/userLoginLogPageData', 'UserController@userLoginLogPageData')->name('admin.user.userLoginLogPageData');
+        Route::get('/userChangePassword', 'UserController@userChangePassword')->name('admin.user.userChangePassword');
+        Route::post('/userChangePasswordSubmit', 'UserController@userChangePasswordSubmit')->name('admin.user.userChangePasswordSubmit');
 
         Route::group(['middleware' => 'adminUserPermission'], function () {
             Route::post('/leftNavEditSubmit', 'NavController@leftNavEditSubmit')->name('admin.nav.leftNavEditSubmit');

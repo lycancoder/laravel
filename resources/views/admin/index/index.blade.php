@@ -41,7 +41,7 @@
                 <li class="layui-nav-item">
                     <a class="name" href="javascript:;"><img src="{{ asset('img/code.png') }}" alt="logo"> {{ session('loginUser')['name'] }} </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" href-url="demo/login.html"><i class="layui-icon">&#xe673;</i>修改密码</a></dd>
+                        <dd><a href="javascript:;" href-url="{{ route('admin.user.userChangePassword') }}"><i class="layui-icon">&#xe673;</i>修改密码</a></dd>
                         <dd><a href="{{ route('admin.index.logout') }}"><i class="layui-icon">&#x1006;</i>退出</a></dd>
                     </dl>
                 </li>

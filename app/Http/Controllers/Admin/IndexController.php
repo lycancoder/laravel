@@ -46,7 +46,6 @@ class IndexController extends Controller
      * @author Lycan <LycanCoder@gmail.com>
      * @date 2018/12/9
      *
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function logout()

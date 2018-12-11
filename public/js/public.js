@@ -43,3 +43,23 @@ function f_verify_email(v) {
     let regex = /^[a-z0-9]+([._-][a-z0-9]+)*@([0-9a-z]+\.[a-z]{2,14}(\.[a-z]{2})?)$/i; // 正则式
     return regex.test(v); // 验证：true-正确；false-错误
 }
+
+
+/*
+ * 回车键触发点击事件
+ * @author Lycan
+ * @date 2018-10-15
+ * @param e
+ * @param id
+ * <input onkeypress="return f_keyword_click(event, '#serch')" />
+ */
+function f_keyword_click(e, id) {
+    // 兼容IE和Firefox获得 keyBoardEvent 对象
+    e = e ? e : (window.event ? window.event : "");
+    // 兼容IE和Firefox获得 keyBoardEvent 对象的键值
+    let key = e.keyCode ? e.keyCode : e.which;
+    // 判断是否是回车事件。
+    if (key == 13) {
+        $(id).click();
+    }
+}

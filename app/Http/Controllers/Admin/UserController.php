@@ -346,4 +346,34 @@ class UserController extends Controller
             'data' => $data['data'],
         ));
     }
+
+    /**
+     * userChangePassword 修改密码页面
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2018/12/11
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function userChangePassword()
+    {
+        return view('admin.user.userChangePassword');
+    }
+
+    /**
+     * userChangePasswordSubmit 保存新密码
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2018/12/11
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function userChangePasswordSubmit(Request $request)
+    {
+        $model = new User();
+        $getData = $request->all();
+        $getData = json_decode($getData['data'], true);
+        $ret = $model->changePassword(session('loginUser')['id'], $getData['oldPassword'], $getData['newPassword']);
+
+        return response()->json($ret);
+    }
 }

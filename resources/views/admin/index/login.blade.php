@@ -1,6 +1,6 @@
 @extends('admin.base')
 @section('content')
-<body class="login-body body">
+<body class="login-body body" onkeypress="return f_keyword_click(event, '#sub')">
     <div class="login-box">
         <form class="layui-form layui-form-pane" method="post" action="{{ route('admin.index.checkLogin') }}">
             {{ csrf_field() }}
@@ -28,7 +28,7 @@
             </div>
             <div class="layui-form-item">
                 <button type="reset" class="layui-btn layui-btn-danger btn-reset">重置</button>
-                <button type="button" class="layui-btn btn-submit" lay-submit="" lay-filter="sub">立即登录</button>
+                <button type="button" class="layui-btn btn-submit" lay-submit="" lay-filter="sub" id="sub">立即登录</button>
             </div>
         </form>
     </div>
