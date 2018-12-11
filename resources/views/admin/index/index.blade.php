@@ -41,7 +41,8 @@
                 <li class="layui-nav-item">
                     <a class="name" href="javascript:;"><img src="{{ asset('img/code.png') }}" alt="logo"> {{ session('loginUser')['name'] }} </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" href-url="{{ route('admin.user.userChangePassword') }}"><i class="layui-icon">&#xe673;</i>修改密码</a></dd>
+                        {{--<dd><a href="javascript:;" href-url="{{ route('admin.user.userChangePassword') }}"><i class="layui-icon">&#xe673;</i>修改密码</a></dd>--}}
+                        <dd><a href="javascript:;" href-url="" onclick="change_password()"><i class="layui-icon">&#xe673;</i>修改密码</a></dd>
                         <dd><a href="{{ route('admin.index.logout') }}"><i class="layui-icon">&#x1006;</i>退出</a></dd>
                     </dl>
                 </li>
@@ -151,5 +152,18 @@
 
         // you code ...
     });
+
+    // 修改密码
+    function change_password() {
+        layer.open({
+            type: 2, // 类型
+            shade: 0.5, // 遮罩
+            shift: 1,
+            maxmin: true, // 最大最小化
+            title: '修改密码', // 标题
+            area: ['710px', '450px'], // 宽高
+            content: '{{ route('admin.user.userChangePassword') }}' // 内容
+        });
+    }
 </script>
 @endsection
