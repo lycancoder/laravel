@@ -71,6 +71,6 @@ class PublicController extends Controller
     {
         $model = new FontIcon();
         $list = $model->getList();
-        return view('admin.common.iconChar', compact('list'));
+        return view('admin.public.iconChar', compact('list'));
     }
 }

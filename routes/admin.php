@@ -31,6 +31,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::get('/userLoginLogPageData', 'UserController@userLoginLogPageData')->name('admin.user.userLoginLogPageData');
         Route::get('/userChangePassword', 'UserController@userChangePassword')->name('admin.user.userChangePassword');
         Route::post('/userChangePasswordSubmit', 'UserController@userChangePasswordSubmit')->name('admin.user.userChangePasswordSubmit');
+        Route::get('/applyPage', 'VideoContestController@applyPage')->name('admin.videoContest.applyPage');
+        Route::get('/applyPageData', 'VideoContestController@applyPageData')->name('admin.videoContest.applyPageData');
+        Route::get('/memberPage', 'VideoContestController@memberPage')->name('admin.videoContest.memberPage');
 
         Route::group(['middleware' => 'adminUserPermission'], function () {
             Route::post('/leftNavEditSubmit', 'NavController@leftNavEditSubmit')->name('admin.nav.leftNavEditSubmit');
@@ -49,6 +52,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
             Route::post('/delUserData', 'UserController@delUserData')->name('admin.user.delUserData');
             Route::post('/resetUserPassword', 'UserController@resetUserPassword')->name('admin.user.resetUserPassword');
             Route::post('/userEditSubmit', 'UserController@userEditSubmit')->name('admin.user.userEditSubmit');
+
+            Route::post('/delVideoContestData', 'VideoContestController@delVideoContestData')->name('admin.videoContest.delVideoContestData');
         });
     });
 });
