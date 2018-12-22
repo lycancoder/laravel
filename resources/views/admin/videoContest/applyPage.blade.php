@@ -18,7 +18,7 @@
         <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="deletes"><i class="layui-icon">&#xe640;</i> 删除</button>
         <input class="layui-input" type="text" name="id" placeholder="参赛编号" style="height: 30px;display: inline-block;width: auto;">
         <input class="layui-input" type="text" name="phone" placeholder="报名电话" style="height: 30px;display: inline-block;width: auto;">
-        <button class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe615;</i> 搜索</button>
+        <button class="layui-btn layui-btn-sm" lay-event="search"><i class="layui-icon">&#xe615;</i> 搜索</button>
     </script>
 
     <script type="text/javascript">
@@ -75,23 +75,27 @@
                         content: '{{ route('admin.videoContest.memberPage') }}?id=' + data.id
                     });
                 } else if (obj.event === 'del') { // 删除
-                    layer.confirm('确定要删除此条数据吗？', function(index) {
-                        $.ajax({
-                            url: '{{ route('admin.videoContest.delVideoContestData') }}',
-                            type: 'post',
-                            dataType: 'json',
-                            data: {'ids': data.id},
-                            beforeSend: function () {},
-                            success: function (d) {
-                                layer.msg(d.msg);
-                                if (1 == d.status) {
-                                    obj.del();
-                                    layer.close(index);
+                    layer.msg('您确定要删除所选数据？', {
+                        time: false,
+                        btn: ['确定', '取消'],
+                        btnAlign: 'c',
+                        btn1: function (index, layero) {
+                            $.ajax({
+                                url: '{{ route('admin.videoContest.delVideoContestData') }}',
+                                type: 'post',
+                                dataType: 'json',
+                                data: {'ids' : data.id},
+                                success: function (d) {
+                                    layer.msg(d.msg);
+                                    if (1 == d.status) {
+                                        obj.del();
+                                    }
                                 }
-                            },
-                            error: function () {},
-                            complete: function () {}
-                        });
+                            });
+                        },
+                        btn2: function (index, layero) {
+                            // you code ...
+                        },
                     });
                 }
             });
@@ -135,7 +139,7 @@
                             // you code ...
                         },
                     });
-                } else if (obj.event === 'deletes') {
+                } else if (obj.event === 'search') {
                     var phone = $('input[name="phone"]').val();
                     var id = $('input[name="id"]').val();
                     tableIns.reload({
@@ -143,7 +147,11 @@
                             phone:phone,
                             id:id,
                         },
-                        page:{curr:1}
+                        page:{curr:1},
+                        done: function (res) {
+                            $('input[name="phone"]').val(phone);
+                            $('input[name="id"]').val(id);
+                        }
                     });
                 }
             });
