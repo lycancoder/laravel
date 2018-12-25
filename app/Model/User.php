@@ -123,16 +123,16 @@ class User extends Model
         $model = $data['id'] ? $this->find($data['id']) : $this;
 
         if (empty($data['id'])) {
-            if ($this->isExistence(['email' => $data['email']]))
+            if ($data['email'] && $this->isExistence(['email' => $data['email']]))
                 return returnCode(0, '邮箱已存在');
-            if ($this->isExistence(['phone' => $data['phone']]))
+            if ($data['phone'] && $this->isExistence(['phone' => $data['phone']]))
                 return returnCode(0, '手机号码已存在');
 
             $model->password = password_hash('123456', PASSWORD_DEFAULT);
         } else {
-            if (empty($model->email) && $this->isExistence(['email' => $data['email']]))
+            if (empty($model->email) && $data['email'] && $this->isExistence(['email' => $data['email']]))
                 return returnCode(0, '邮箱已存在');
-            if (empty($model->phone) && $this->isExistence(['phone' => $data['phone']]))
+            if (empty($model->phone) && $data['phone'] && $this->isExistence(['phone' => $data['phone']]))
                 return returnCode(0, '手机号码已存在');
         }
 
