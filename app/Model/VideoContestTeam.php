@@ -17,9 +17,7 @@ class VideoContestTeam extends Model
 
     protected $table = 'video_contest_team';
     protected $primaryKey = 'id';
-//    protected $fillable = ['name', 'email', 'password'];
-//    protected $hidden = ['password'];
-    protected $dates = ['delete_at'];
+    protected $dates = ['deleted_at'];
     protected $dateFormat = 'U';
     public $timestamps = true;
 

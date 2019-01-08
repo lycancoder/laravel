@@ -63,6 +63,20 @@ return [
             'bucket' => env('AWS_BUCKET'),
         ],
 
+        'qiniu' => [ // 七牛存储
+            'driver'  => 'qiniu',
+            'domains' => [
+                'default' => 'file.lyite.com',
+                'https'   => '',
+                'custom'  => '',
+            ],
+            'access_key' => env('QN_AccessKey'),
+            'secret_key' => env('QN_SecretKey'),
+            'bucket'     => 'lyite-file',
+            'notify_url' => '',
+            'access'     => 'public',
+        ],
+
     ],
 
 ];

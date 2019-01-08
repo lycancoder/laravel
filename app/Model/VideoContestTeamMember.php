@@ -17,12 +17,18 @@ class VideoContestTeamMember extends Model
 
     protected $table = 'video_contest_team_member';
     protected $primaryKey = 'id';
-//    protected $fillable = ['name', 'email', 'password'];
-//    protected $hidden = ['password'];
-    protected $dates = ['delete_at'];
+    protected $dates = ['deleted_at'];
     protected $dateFormat = 'U';
     public $timestamps = true;
 
+    /**
+     * getMemberList 获取团队成员
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2019/1/8
+     *
+     * @param int $id
+     * @return mixed
+     */
     public function getMemberList(int $id)
     {
         $list = $this->where('vct_id', $id)

@@ -11,9 +11,7 @@ class User extends Model
 
     protected $table = 'user';
     protected $primaryKey = 'id';
-//    protected $fillable = ['name', 'email', 'password'];
-//    protected $hidden = ['password'];
-    protected $dates = ['delete_at'];
+    protected $dates = ['deleted_at'];
     protected $dateFormat = 'U';
     public $timestamps = true;
 

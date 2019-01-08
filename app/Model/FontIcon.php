@@ -19,7 +19,7 @@ class FontIcon extends Model
     protected $primaryKey = 'id'; // 指定主键
     //protected $fillable = ['name', 'icon', 'font_class']; // 指定允许批量赋值的字段
     //protected $guarded = []; // 指定不允许批量赋值的字段
-    protected $dates = ['delete_at']; // 软删除字段
+    protected $dates = ['deleted_at']; // 软删除字段
     protected $dateFormat = 'U'; // 时间戳格式
     public $timestamps = true; // 自动维护时间戳 updated_at created_at 字段
 

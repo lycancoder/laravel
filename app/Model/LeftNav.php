@@ -17,9 +17,7 @@ class LeftNav extends Model
 
     protected $table = 'left_nav';
     protected $primaryKey = 'id';
-    //protected $fillable = ['parent_id', 'title'];
-    //protected $guarded = ['sort', 'url'];
-    protected $dates = ['delete_at'];
+    protected $dates = ['deleted_at'];
     protected $dateFormat = 'U';
     public $timestamps = true;
 
