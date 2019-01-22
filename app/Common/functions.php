@@ -117,3 +117,58 @@ if (!function_exists('verify_phone')) {
         return preg_match($pattern, $v) ? true : false;
     }
 }
+
+if (!function_exists("request_curl")) {
+    /**
+     * request_curl
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2019/1/22
+     *
+     * @param string $curl 请求地址
+     * @param bool $https 请求类型
+     * @param string $method 请求方式
+     * @param null $data 请求参数数据
+     * @param array $header 请求头内容
+     * @return mixed|string
+     */
+    function request_curl(string $curl, $https = true, $method = "POST", $data = null, $header = array())
+    {
+        $ch = curl_init(); // 初始化
+
+        // 是否有头信息
+        if (count($header) == 0) {
+            $header = array("Content-type: application/json;charset=UTF-8"); // 请求头信息
+        }
+
+        // 判断是否是使用 https 协议
+        if ($https) {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 禁止 cURL 验证对等证书
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // 不检查服务器SSL证书中是否存在一个公用名
+        }
+
+        // 是否是 POST 请求
+        if ($method == "POST") {
+            curl_setopt($ch, CURLOPT_POST, true); // 设置为 POST 请求
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data); // 设置POST的请求数据
+        }
+
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20); // 超时时间（秒）
+        curl_setopt($ch, CURLOPT_URL, $curl); // 设置访问的 URL
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // 返回字符串，而不直接输出
+        curl_setopt($ch, CURLOPT_HEADER, false); // 将头文件的信息作为数据流输出
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header); // 设置请求头信息
+
+        $content = curl_exec($ch); // 开始访问
+
+        $errorNo = curl_errno($ch); // 请求错误代码号
+        $errorMsg = curl_error($ch); // 错误信息
+
+        curl_close($ch); // 关闭 释放资源
+
+        if ($errorNo > 0) {
+            return json_encode(array("status" => 0, "msg" => "cUrl Error (" . $errorNo . "): " . $errorMsg));
+        }
+
+        return $content;
+    }
+}
