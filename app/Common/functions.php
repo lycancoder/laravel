@@ -172,3 +172,30 @@ if (!function_exists("request_curl")) {
         return $content;
     }
 }
+
+if (!function_exists("array_reordering")) {
+    /**
+     * array_reordering 对二维数组重新排序并重新整理键
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2019/2/24
+     *
+     * @param array $data
+     * @param string $field
+     * @param string $sort
+     * @return array
+     */
+    function array_reordering(array $data, string $field, $sort = "asc")
+    {
+        // 获取排序字段
+        $distance = array();
+        foreach ($data as $key => $value) {
+            $distance[$key] = $value[$field];
+        }
+        array_multisort($distance, mb_strtolower($sort) == "asc" ? SORT_ASC : SORT_DESC, $data);
+
+        // 重新处理键值
+        $data = array_values($data);
+
+        return $data;
+    }
+}
