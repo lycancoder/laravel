@@ -163,7 +163,7 @@ class User extends Model
             ->when($type == 'phone', function ($query) use ($data) {
                 return $query->where('phone', $data);
             })
-            ->first(['id', 'name', 'email', 'phone', 'password', 'status', 'g_id']);
+            ->first(['id', 'name', 'email', 'phone', 'password', 'status', 'g_id', 'header_id']);
 
         return $info;
     }
@@ -188,6 +188,21 @@ class User extends Model
 
         $num = $this->where('id', $id)->update(['password' => password_hash($newPwd, PASSWORD_DEFAULT)]);
 
+        return returnCode($num ? 1 : 0, $num ? '操作成功' : '操作失败');
+    }
+
+    /**
+     * changeHeader 修改头像
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2019/3/5
+     *
+     * @param int $id
+     * @param int $fid
+     * @return array
+     */
+    public function changeHeader(int $id, int $fid)
+    {
+        $num = $this->where('id', $id)->update(['header_id' => $fid]);
         return returnCode($num ? 1 : 0, $num ? '操作成功' : '操作失败');
     }
 }

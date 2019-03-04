@@ -376,4 +376,39 @@ class UserController extends Controller
 
         return response()->json($ret);
     }
+
+    /**
+     * userChangeHeader 更换像页面
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2019/3/3
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function userChangeHeader()
+    {
+        return view('admin.user.userChangeHeader');
+    }
+
+    /**
+     * userChangeHeaderSubmit 更换头像
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2019/3/5
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function userChangeHeaderSubmit(Request $request)
+    {
+        $model = new User();
+        $getData = $request->all();
+        $getData = json_decode($getData['data'], true);
+        $ret = $model->changeHeader(session('loginUser')['id'], $getData['fid']);
+        if ($ret["status"] == 1) {
+            $userData = session("loginUser");
+            $userData["header"] = $getData["furl"];
+            session(['loginUser' => $userData]);
+        }
+
+        return response()->json($ret);
+    }
 }

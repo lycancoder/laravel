@@ -44,4 +44,18 @@ class File extends Model
             return returnCode(0, '保存文件失败');
         }
     }
+
+    /**
+     * getPath 获取文件地址
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2019/3/5
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function getPath(int $id)
+    {
+        $info = $this->where('id', $id)->first(['save_path']);
+        return $info;
+    }
 }

@@ -34,6 +34,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::get('/applyPage', 'VideoContestController@applyPage')->name('admin.videoContest.applyPage');
         Route::get('/applyPageData', 'VideoContestController@applyPageData')->name('admin.videoContest.applyPageData');
         Route::get('/memberPage', 'VideoContestController@memberPage')->name('admin.videoContest.memberPage');
+        Route::get('/userChangeHeader', 'UserController@userChangeHeader')->name('admin.user.userChangeHeader');
+        Route::post('/userChangeHeaderSubmit', 'UserController@userChangeHeaderSubmit')->name('admin.user.userChangeHeaderSubmit');
 
         Route::group(['middleware' => 'adminUserPermission'], function () {
             Route::post('/leftNavEditSubmit', 'NavController@leftNavEditSubmit')->name('admin.nav.leftNavEditSubmit');

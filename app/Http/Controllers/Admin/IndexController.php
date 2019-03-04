@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Model\File;
 use App\Model\LeftNav;
 use App\Model\User;
 use App\Model\UserGroup;
@@ -107,6 +108,15 @@ class IndexController extends Controller
             $request->flash();
             return redirect()->back()->withErrors('该账号已被禁用');
         }
+
+        if ($userData["header_id"] != null || $userData["header_id"] != '') {
+            $file = new File();
+            $filePath = $file->getPath($userData["header_id"]);
+            $userData['header'] = $filePath["save_path"];
+        } else {
+            $userData['header'] = "img/code.png";
+        }
+        unset($userData["header_id"]);
 
         $userGroup = new UserGroup();
         $groupInfo = $userGroup->getInfoId($userData['g_id']);

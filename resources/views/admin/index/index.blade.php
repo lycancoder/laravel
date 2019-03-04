@@ -39,9 +39,9 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="name" href="javascript:;"><img src="{{ asset('img/code.png') }}" alt="logo"> {{ session('loginUser')['name'] }} </a>
+                    <a class="name" href="javascript:;"><img class="login-user-header" src="{{ session('loginUser')['header'] }}" alt="logo" style="border-radius: 50%;"> {{ session('loginUser')['name'] }} </a>
                     <dl class="layui-nav-child">
-                        {{--<dd><a href="javascript:;" href-url="{{ route('admin.user.userChangePassword') }}"><i class="layui-icon">&#xe673;</i>修改密码</a></dd>--}}
+                        <dd><a href="javascript:;" href-url="" onclick="change_header()"><i class="layui-icon">&#xe66f;</i>更换头像</a></dd>
                         <dd><a href="javascript:;" href-url="" onclick="change_password()"><i class="layui-icon">&#xe673;</i>修改密码</a></dd>
                         <dd><a href="{{ route('admin.index.logout') }}"><i class="layui-icon">&#x1006;</i>退出</a></dd>
                     </dl>
@@ -163,6 +163,20 @@
             title: '修改密码', // 标题
             area: ['710px', '450px'], // 宽高
             content: '{{ route('admin.user.userChangePassword') }}' // 内容
+        });
+    }
+
+    // 更改头像
+    function change_header() {
+        layer.open({
+            type: 2, // 类型
+            shade: 0.5, // 遮罩
+            shift: 1,
+            resize: false, // 拉伸
+            maxmin: false, // 最大最小化
+            title: '更换头像', // 标题
+            area: ['300px', '300px'], // 宽高
+            content: '{{ route('admin.user.userChangeHeader') }}' // 内容
         });
     }
 </script>
