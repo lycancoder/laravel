@@ -1,10 +1,9 @@
 /*
- * +------------------------------------
- * |判断是通过什么浏览器打开的网址，需要执行的事件待完善 TODO
- * |mobile：ios浏览器、android浏览器、微信浏览器等
- * |PC：PC端浏览器
- * |@author Lycan LycanCoder@gmail.com
- * |@date 2019/03/09
+ * 判断是通过什么浏览器打开的网址，需要执行的事件待完善 TODO
+ * mobile：ios浏览器、android浏览器、微信浏览器等
+ * PC：PC端浏览器
+ * @author Lycan LycanCoder@gmail.com
+ * @date 2019/03/09
  */
 function browserInfo(pc = "", android = "", ios = "", weChat = "") {
     var browser = {
