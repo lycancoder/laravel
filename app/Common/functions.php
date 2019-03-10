@@ -199,3 +199,67 @@ if (!function_exists("array_reordering")) {
         return $data;
     }
 }
+
+if (!function_exists("jh_recent_holiday")) {
+    /**
+     * TODO 当前请求 100次/天，建议拿到数据后进行处理保存
+     * jh_recent_holiday 聚合数据接口 - 获取近期假期
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2019/3/10
+     *
+     * @param string $yearMonth 2019-3
+     * @return array
+     */
+    function jh_recent_holiday($yearMonth = "")
+    {
+        header('Content-type:text/html;charset=utf-8');
+
+        // 查询时间处理 2019-3
+        $yearMonth = date("Y-n", empty($yearMonth) ? time() : strtotime($yearMonth));
+
+        // 请求聚合数据接口获取数据
+        $url = "http://v.juhe.cn/calendar/month";
+        $params = http_build_query(array(
+            "key" => env("JUHE_CALENDAR_APP_KEY", ""),// 您申请的appKey
+            "year-month" => $yearMonth,// 指定月份,格式为YYYY-MM,如月份和日期小于10,则取个位,如:2012-1
+        ));
+        $content = request_curl($url . "?" . $params, false, "GET");
+        $result = json_decode($content, true);
+        if ($result["error_code"] != 0 || $result == "") {
+            return array('status' => 0, 'msg' => "操作失败", 'data' => $result);
+        }
+
+        $holiday = array(); // 假期
+        $holidayDate = array(); // 假期 - 时间格式(2019-2-4)
+        $holidayWork = array(); // 周末(周六、周日)需要上班的日期
+        $holidayWorkDate = array(); // 周末(周六、周日)需要上班的日期 - 时间格式(2019-2-2)
+
+        $list = $result["result"]["data"]["holiday_array"];
+        foreach ($list as $key => $value) {
+            foreach ($value["list"] as $k => $v) {
+                if ($v["status"] == 1) {
+                    array_push($holiday, strtotime($v["date"]));
+                    array_push($holidayDate, $v["date"]);
+                } else {
+                    array_push($holidayWork, strtotime($v["date"]));
+                    array_push($holidayWorkDate, $v["date"]);
+                }
+            }
+        }
+
+        // 去除重复数据，保留一条，重新处理键值
+        $holiday = array_values(array_unique($holiday));
+        $holidayDate = array_values(array_unique($holidayDate));
+        $holidayWork = array_values(array_unique($holidayWork));
+        $holidayWorkDate = array_values(array_unique($holidayWorkDate));
+
+        $data = array(
+            "holiday" => $holiday,
+            "holidayDate" => $holidayDate,
+            "holidayWork" => $holidayWork,
+            "holidayWorkDate" => $holidayWorkDate,
+        );
+
+        return array('status' => 1, 'msg' => "操作成功", 'data' => $data);
+    }
+}
