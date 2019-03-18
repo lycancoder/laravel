@@ -75,7 +75,7 @@
                 dataType: 'json',
                 data: {'data' : JSON.stringify(data.field)},
                 success: function (d) {
-                    if (d.status == 1) {
+                    if (d.code == 0) {
                         layer.msg(d.msg + ' 请重新登录', {time: 2000}, function () {
                             parent.location.href = "{{ route('admin.index.logout') }}";
                         });

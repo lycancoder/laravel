@@ -123,7 +123,7 @@ class NavController extends Controller
         $getData = json_decode($getData['data'], true);
         $ret = $model->updateInfo($getData);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -140,7 +140,7 @@ class NavController extends Controller
         $getData = $request->all();
         $ret = $model->updateTarget($getData['id'], $getData['target'] ? 1 : 2);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -157,7 +157,7 @@ class NavController extends Controller
         $getData = $request->all();
         $ret = $model->updateStatus($getData['id'], $getData['status'] ? 1 : 2);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -174,7 +174,7 @@ class NavController extends Controller
         $getData = $request->all();
         $ret = $model->updateSort($getData['id'], $getData['sort']);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -191,7 +191,7 @@ class NavController extends Controller
         $getData = $request->all();
         $ret = $model->delDataIds($getData['ids']);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -233,6 +233,6 @@ class NavController extends Controller
         $ids = implode(',', $getData);
         $ret = $model->updatePermission(['id'=>$gid,'nav_ids'=>$ids]);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 }

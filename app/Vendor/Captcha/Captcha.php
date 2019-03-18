@@ -233,16 +233,16 @@ class Captcha
 
         if (empty($code)) {
             // 验证码为空
-            return array('status' => 0, 'msg' => '验证码为空');
+            return array('code' => 1, 'msg' => '验证码为空');
         } elseif ((time() - $seCode['time']) > 300) {
             // 设置5分钟内做有效验证码
-            return array('status' => 0, 'msg' => '验证码过时');
+            return array('code' => 2, 'msg' => '验证码过时');
         } elseif (md5('Lycan'.strtolower($code)) != $seCode['value']) {
             // 验证码错误
-            return array('status' => 0, 'msg' => '验证码错误');
+            return array('code' => 3, 'msg' => '验证码错误');
         } else {
             // 验证码正确
-            return array('status' => 1, 'msg' => '验证码正确');
+            return array('code' => 0, 'msg' => '验证码正确');
         }
     }
 }

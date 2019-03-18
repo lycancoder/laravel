@@ -135,7 +135,7 @@
                         },
                         success: function (d) {
                             layer.msg(d.msg);
-                            if (d.status == 1) {
+                            if (d.code == 0) {
                                 //同步更新表格和缓存对应的值
                                 obj.update({sort: value});
                                 layer.close(index);
@@ -162,7 +162,7 @@
                 },
                 success: function (d) {
                     layer.msg(d.msg);
-                    if (d.status == 0) {
+                    if (d.code != 0) {
                         obj.elem.checked = !obj.elem.checked;
                         form.render();
                     }
@@ -186,7 +186,7 @@
                 },
                 success: function (d) {
                     layer.msg(d.msg);
-                    if (d.status == 0) {
+                    if (d.code != 0) {
                         obj.elem.checked = !obj.elem.checked;
                         form.render();
                     }

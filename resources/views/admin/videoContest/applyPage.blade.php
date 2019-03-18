@@ -87,7 +87,7 @@
                                 data: {'ids' : data.id},
                                 success: function (d) {
                                     layer.msg(d.msg);
-                                    if (1 == d.status) {
+                                    if (0 == d.code) {
                                         obj.del();
                                     }
                                 }

@@ -50,7 +50,7 @@
                     dataType: 'json',
                     data: {'data' : JSON.stringify(data.field)},
                     success: function (d) {
-                        if (d.status == 1) {
+                        if (d.code == 0) {
                             layer.msg(d.msg, {time: 2000}, function () {
                                 // 关闭当前页面
                                 var index = parent.layer.getFrameIndex(window.name);

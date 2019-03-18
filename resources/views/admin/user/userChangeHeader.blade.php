@@ -51,7 +51,7 @@
                     dataType: 'json',
                     data: {'data' : JSON.stringify(data.field)},
                     success: function (d) {
-                        if (d.status == 1) {
+                        if (d.code == 0) {
                             layer.msg(d.msg, {time: 2000}, function () {
                                 $(parent.document).find("img.login-user-header").attr('src', $("input[name='furl']").val());
                                 var index = parent.layer.getFrameIndex(window.name);
@@ -82,7 +82,7 @@
                     });
                 },
                 done: function(res){
-                    if (res.status == 1) {
+                    if (res.code == 0) {
                         layer.msg('上传成功');
                         $("#uploadBtn").hide();
                         $("#saveBtn").show();

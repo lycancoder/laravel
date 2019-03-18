@@ -46,19 +46,19 @@ class PublicController extends Controller
         // 检测上传的文件是否合法
         if (!($file->isValid())) {
             $msg = $file->getErrorMessage();
-            return response()->json(returnCode(0, $msg));
+            return response()->json(return_code(1001, $msg));
         }
 
         // 检测上传文件后缀
         $ext = $file->getClientOriginalExtension();
         if ( !(empty($exts) || in_array(strtolower($ext), $exts)) ) {
-            return response()->json(returnCode(0, 'Upload file suffix not allowed'));
+            return response()->json(return_code(1002, 'Upload file suffix not allowed'));
         }
 
         // 检测上传文件大小
         $size = $file->getClientSize();
         if ( !(0 == $maxSize || $size <= $maxSize) ) {
-            return response()->json(returnCode(0, 'Upload file size does not match'));
+            return response()->json(return_code(1003, 'Upload file size does not match'));
         }
 
         $originalName = $file->getClientOriginalName(); // 原文件名
@@ -70,7 +70,7 @@ class PublicController extends Controller
         $res = $disk->put($saveName, file_get_contents($realPath));
         if (!$res) {
             $msg = $file->getErrorMessage();
-            return response()->json(returnCode(0, $msg));
+            return response()->json(return_code(1004, $msg));
         }
 
         // 获取下载路径
@@ -84,7 +84,7 @@ class PublicController extends Controller
             'size' => $size,
             'savePath' => $savePath,
         ]);
-        if ($saveData['status'] == 0) {
+        if ($saveData['code'] != 0) {
             return response()->json($saveData);
         }
 
@@ -93,7 +93,7 @@ class PublicController extends Controller
             'url' => $savePath,
             'fid' => $saveData['data']['id']
         ];
-        return response()->json(returnCode(1, 'Successful upload', $retData));
+        return response()->json(return_code(0, 'Successful upload', $retData));
     }
 
 }

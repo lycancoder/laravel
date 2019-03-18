@@ -30,7 +30,7 @@ class AdminUserPermission
 
         if (!isset(session('LoginUserPermission')[$route])) {
             if (Request::ajax()) {
-                return response()->json(returnCode(0, '您没有操作权限'));
+                return response()->json(return_code(1001, '您没有操作权限'));
             } else {
                 $request->flash();
                 return redirect()->back()->withErrors('您没有操作权限');

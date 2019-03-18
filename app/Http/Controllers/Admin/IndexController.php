@@ -82,7 +82,7 @@ class IndexController extends Controller
         $getData = $request->all();
 
         $verifyCode = (new PublicController())->verifyCode($getData['code']);
-        if ($verifyCode['status'] == 0) {
+        if ($verifyCode['code'] != 0) {
             $request->flash();
             return redirect()->back()->withErrors($verifyCode['msg']);
         }

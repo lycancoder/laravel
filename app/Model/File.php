@@ -39,9 +39,9 @@ class File extends Model
 
         if ($bool) {
             $retData['id'] = $this->id;
-            return returnCode(1, '保存文件成功', $retData);
+            return return_code(0, '保存文件成功', $retData);
         } else {
-            return returnCode(0, '保存文件失败');
+            return return_code(1001, '保存文件失败');
         }
     }
 

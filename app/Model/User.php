@@ -122,16 +122,16 @@ class User extends Model
 
         if (empty($data['id'])) {
             if ($data['email'] && $this->isExistence(['email' => $data['email']]))
-                return returnCode(0, '邮箱已存在');
+                return return_code(1001, '邮箱已存在');
             if ($data['phone'] && $this->isExistence(['phone' => $data['phone']]))
-                return returnCode(0, '手机号码已存在');
+                return return_code(1002, '手机号码已存在');
 
             $model->password = password_hash('123456', PASSWORD_DEFAULT);
         } else {
             if (empty($model->email) && $data['email'] && $this->isExistence(['email' => $data['email']]))
-                return returnCode(0, '邮箱已存在');
+                return return_code(1001, '邮箱已存在');
             if (empty($model->phone) && $data['phone'] && $this->isExistence(['phone' => $data['phone']]))
-                return returnCode(0, '手机号码已存在');
+                return return_code(1002, '手机号码已存在');
         }
 
         $model->name = $data['name'];
@@ -142,7 +142,7 @@ class User extends Model
         $model->status = $data['status'] ?? 2;
         $bool = $model->save();
 
-        return returnCode($bool ? 1 : 0, $bool ? '操作成功' : '操作失败');
+        return return_code($bool ? 0 : 1003, $bool ? '操作成功' : '操作失败');
     }
 
     /**
@@ -183,12 +183,12 @@ class User extends Model
         $info = $this->where('id', $id)->first(['password']);
 
         if (!password_verify($oldPwd, $info['password'])) {
-            return returnCode(0, '原密码错误');
+            return return_code(1001, '原密码错误');
         }
 
         $num = $this->where('id', $id)->update(['password' => password_hash($newPwd, PASSWORD_DEFAULT)]);
 
-        return returnCode($num ? 1 : 0, $num ? '操作成功' : '操作失败');
+        return return_code($num ? 0 : 1002, $num ? '操作成功' : '操作失败');
     }
 
     /**
@@ -203,6 +203,6 @@ class User extends Model
     public function changeHeader(int $id, int $fid)
     {
         $num = $this->where('id', $id)->update(['header_id' => $fid]);
-        return returnCode($num ? 1 : 0, $num ? '操作成功' : '操作失败');
+        return return_code($num ? 0 : 1001, $num ? '操作成功' : '操作失败');
     }
 }

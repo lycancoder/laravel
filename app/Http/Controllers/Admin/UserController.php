@@ -76,7 +76,7 @@ class UserController extends Controller
         $getData = $request->all();
         $ret = $model->updateSort($getData['id'], $getData['sort']);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -112,7 +112,7 @@ class UserController extends Controller
         $getData = json_decode($getData['data'], true);
         $ret = $model->updateInfo($getData);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -129,7 +129,7 @@ class UserController extends Controller
         $getData = $request->all();
         $ret = $model->delDataIds($getData['ids']);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -205,7 +205,7 @@ class UserController extends Controller
         $getData = $request->all();
         $ret = $model->updateSort($getData['id'], $getData['sort']);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -222,7 +222,7 @@ class UserController extends Controller
         $getData = $request->all();
         $ret = $model->updateStatus($getData['id'], $getData['status'] ? 1 : 2);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -239,7 +239,7 @@ class UserController extends Controller
         $getData = $request->all();
         $ret = $model->delDataIds($getData['ids']);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -256,7 +256,7 @@ class UserController extends Controller
         $getData = $request->all();
         $ret = $model->resetPassword($getData['id']);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
@@ -403,7 +403,7 @@ class UserController extends Controller
         $getData = $request->all();
         $getData = json_decode($getData['data'], true);
         $ret = $model->changeHeader(session('loginUser')['id'], $getData['fid']);
-        if ($ret["status"] == 1) {
+        if ($ret["code"] === 0) {
             $userData = session("loginUser");
             $userData["header"] = $getData["furl"];
             session(['loginUser' => $userData]);

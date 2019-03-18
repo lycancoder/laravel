@@ -29,20 +29,20 @@ if (!function_exists('p')) {
     }
 }
 
-if (!function_exists('returnCode')) {
+if (!function_exists('return_code')) {
     /**
-     * 返回一个标准的基本数据结构
+     * return_code 返回一个标准的基本数据结构
      * @author Lycan <LycanCoder@gmail.com>
      * @time 2018/10/1
      *
-     * @param int    $status 状态码
+     * @param int    $code 状态码
      * @param string $msg    消息
      * @param array  $data   数据
      * @return array
      */
-    function returnCode($status = 0, $msg = 'Not Message', $data = array())
+    function return_code($code = 0, $msg = 'Not Message', $data = array())
     {
-        return array('status' => $status, 'msg' => $msg, 'data' => $data);
+        return array('code' => $code, 'msg' => $msg, 'data' => $data);
     }
 }
 
@@ -166,7 +166,7 @@ if (!function_exists("request_curl")) {
         curl_close($ch); // 关闭 释放资源
 
         if ($errorNo > 0) {
-            return json_encode(array("status" => 0, "msg" => "cUrl Error (" . $errorNo . "): " . $errorMsg));
+            return json_encode(array("code" => 1001, "msg" => "cUrl Error (" . $errorNo . "): " . $errorMsg));
         }
 
         return $content;
@@ -226,7 +226,7 @@ if (!function_exists("jh_recent_holiday")) {
         $content = request_curl($url . "?" . $params, false, "GET");
         $result = json_decode($content, true);
         if ($result["error_code"] != 0 || $result == "") {
-            return array('status' => 0, 'msg' => "操作失败", 'data' => $result);
+            return array('code' => $result["error_code"], 'msg' => "操作失败", 'data' => $result);
         }
 
         $holiday = array(); // 假期
@@ -237,7 +237,7 @@ if (!function_exists("jh_recent_holiday")) {
         $list = $result["result"]["data"]["holiday_array"];
         foreach ($list as $key => $value) {
             foreach ($value["list"] as $k => $v) {
-                if ($v["status"] == 1) {
+                if ($v["code"] == 1) {
                     array_push($holiday, strtotime($v["date"]));
                     array_push($holidayDate, $v["date"]);
                 } else {
@@ -260,6 +260,6 @@ if (!function_exists("jh_recent_holiday")) {
             "holidayWorkDate" => $holidayWorkDate,
         );
 
-        return array('status' => 1, 'msg' => "操作成功", 'data' => $data);
+        return array('code' => 0, 'msg' => "操作成功", 'data' => $data);
     }
 }

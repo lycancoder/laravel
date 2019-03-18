@@ -191,6 +191,14 @@ class LeftNav extends Model
         return $retData;
     }
 
+    /**
+     * navList 获取指定的菜单列表
+     * @author Lycan <LycanCoder@gmail.com>
+     * @date 2019/3/18
+     *
+     * @param string $ids
+     * @return mixed
+     */
     public function navList(string $ids)
     {
         $idArr = explode(',', $ids);

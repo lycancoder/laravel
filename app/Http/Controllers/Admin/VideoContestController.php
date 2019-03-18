@@ -80,7 +80,7 @@ class VideoContestController extends Controller
         $getData = $request->all();
         $ret = $model->delDataIds($getData['ids']);
 
-        return response()->json(returnCode($ret ? 1 : 0, $ret ? '操作成功' : '操作失败'));
+        return response()->json(return_code($ret ? 0 : 1001, $ret ? '操作成功' : '操作失败'));
     }
 
     /**
