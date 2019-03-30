@@ -29,7 +29,7 @@
 
             <!-- 顶部右侧添加选项卡监听 -->
             <ul class="layui-nav my-header-user-nav" lay-filter="side-top-right">
-                {{--<li class="layui-nav-item"><a href="javascript:;" class="pay" href-url="">支持作者</a></li>--}}
+                <li class="layui-nav-item"><a href="javascript:;" class="pay" href-url="">支持作者</a></li>
                 <li class="layui-nav-item">
                     <a class="name" href="javascript:;"><i class="layui-icon">&#xe629;</i>主题</a>
                     <dl class="layui-nav-child">
@@ -116,8 +116,8 @@
 
     <!-- pay -->
     <div class="my-pay-box none">
-        <div><img src="{{ asset('img/code.png') }}" alt="支付宝"><p>支付宝</p></div>
-        <div><img src="{{ asset('img/code.png') }}" alt="微信"><p>微信</p></div>
+        <div><img src="{{ asset('img/alipay.jpg') }}" alt="支付宝"><p>支付宝</p></div>
+        <div><img src="{{ asset('img/weChatpay.jpg') }}" alt="微信"><p>微信</p></div>
     </div>
 
     <!-- 右键菜单 -->
