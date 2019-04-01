@@ -10,20 +10,26 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">账号：</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="account" value="{{ old('account') }}" class="layui-input" lay-verify="account" placeholder="邮箱或手机号码" autocomplete="on" maxlength="20"/>
+                    <input type="text" name="account" value="{{ old('account') }}" class="layui-input"
+                           lay-verify="account" placeholder="邮箱或手机号码" autocomplete="on" maxlength="20"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">密码：</label>
                 <div class="layui-input-inline">
-                    <input type="password" name="password" class="layui-input" lay-verify="password" placeholder="密码" maxlength="20"/>
+                    <input type="password" name="password" class="layui-input" lay-verify="password"
+                           placeholder="密码" maxlength="20"/>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">验证码：</label>
                 <div class="layui-input-inline">
-                    <input style="float: left;" type="number" name="code" class="layui-input" lay-verify="code" placeholder="验证码" maxlength="4"/>
-                    <img style="float: left;" title="点击切换验证码" onclick="javascript:this.src='{{ route('admin.public.captcha') }}'" src="{{ route('admin.public.captcha') }}">
+                    <input style="float: left;width: 5.9rem;" type="text" name="code" class="layui-input"
+                           onkeyup="this.value=this.value.replace(/\D/g,'')" lay-verify="code"
+                           placeholder="验证码" maxlength="4"/>
+                    <img style="float: left;" title="点击切换验证码"
+                         onclick="javascript:this.src='{{ route('admin.public.captcha') }}'"
+                         src="{{ route('admin.public.captcha') }}">
                 </div>
             </div>
             <div class="layui-form-item">
