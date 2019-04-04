@@ -17,8 +17,8 @@ class FontIcon extends Model
 
     protected $table = 'font_icon'; // 指定表名
     protected $primaryKey = 'id'; // 指定主键
-    //protected $fillable = ['name', 'icon', 'font_class']; // 指定允许批量赋值的字段
-    //protected $guarded = []; // 指定不允许批量赋值的字段
+    // protected $fillable = ['name', 'icon', 'font_class']; // 指定允许批量赋值的字段
+    // protected $guarded = []; // 指定不允许批量赋值的字段
     protected $dates = ['deleted_at']; // 软删除字段
     protected $dateFormat = 'U'; // 时间戳格式
     public $timestamps = true; // 自动维护时间戳 updated_at created_at 字段
@@ -35,5 +35,4 @@ class FontIcon extends Model
         $list = $this->orderBy('sort', 'asc')->orderBy('id', 'asc')->get();
         return $list;
     }
-
 }

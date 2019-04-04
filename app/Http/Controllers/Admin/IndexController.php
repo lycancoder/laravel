@@ -81,7 +81,8 @@ class IndexController extends Controller
     {
         $getData = $request->all();
 
-        $verifyCode = (new PublicController())->verifyCode($getData['code']);
+        $publicController = new PublicController();
+        $verifyCode = $publicController->verifyCode($getData['code']);
         if ($verifyCode['code'] != 0) {
             $request->flash();
             return redirect()->back()->withErrors($verifyCode['msg']);
@@ -116,6 +117,7 @@ class IndexController extends Controller
         } else {
             $userData['header'] = "img/code.png";
         }
+
         unset($userData["header_id"]);
 
         $userGroup = new UserGroup();
@@ -128,9 +130,13 @@ class IndexController extends Controller
         $navArr = $leftNav->navList($groupInfo['nav_ids']);
         $navPermissionArr = array();
         foreach ($navArr as $k => $v) {
-            if (empty($v['url'])) { continue; }
+            if (empty($v['url'])) {
+                continue ;
+            }
+
             $navPermissionArr[$v['url']] = $v['id'];
         }
+
         session(['LoginUserPermission' => $navPermissionArr]);
 
         $userLoginLog = new UserLoginLog();

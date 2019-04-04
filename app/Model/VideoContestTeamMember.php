@@ -31,7 +31,8 @@ class VideoContestTeamMember extends Model
      */
     public function getMemberList(int $id)
     {
-        $list = $this->where('vct_id', $id)
+        $list = $this
+            ->where('vct_id', $id)
             ->get(['name', 'gender', 'birth'])
             ->toArray();
 

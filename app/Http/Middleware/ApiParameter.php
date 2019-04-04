@@ -15,11 +15,18 @@ class ApiParameter
      */
     public function handle($request, Closure $next)
     {
-        // http://localhost/api/index?timestamp=1547047192215&nonce=6020526690292680&signature=6b2fd274073f1de2308403cb6e0cb78f89f3b66c9dbf647cb7cf224a270b7de4&src=lyite&method=index
+        // http://localhost/api/index?timestamp=1547047192215&nonce=6020526690292680&signature
+        // =6b2fd274073f1de2308403cb6e0cb78f89f3b66c9dbf647cb7cf224a270b7de4&src=lyite&method=index
         $token = 'lyite1001'; // 可以由英文和数字组成，自行指定
         $src = 'lyite'; // 自行指定
         $getData = $request->all();
-        if (!isset($getData['timestamp']) || !isset($getData['nonce']) || !isset($getData['signature']) || !isset($getData['src']) || !isset($getData['method'])) {
+        if (
+            !isset($getData['timestamp']) ||
+            !isset($getData['nonce']) ||
+            !isset($getData['signature']) ||
+            !isset($getData['src']) ||
+            !isset($getData['method'])
+        ) {
             echo json_encode(array("code" => 1, "msg" => "url请求参数错误", "data" => $getData));
             exit();
         }
@@ -66,7 +73,7 @@ class ApiParameter
     protected function getMillisecond()
     {
         list($t1, $t2) = explode(' ', microtime());
-        return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+        return (float)sprintf('%.0f',(floatval($t1) + floatval($t2)) * 1000);
     }
 
     /**

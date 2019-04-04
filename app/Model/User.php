@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
@@ -77,6 +76,7 @@ class User extends Model
     {
         $idArr = explode(',', $ids);
         $num = $this->whereIn('id', $idArr)->delete();
+
         return $num;
     }
 
@@ -90,7 +90,9 @@ class User extends Model
      */
     public function resetPassword(int $id)
     {
-        $num = $this->where('id', $id)->update(['password' => password_hash('123456', PASSWORD_DEFAULT)]);
+        $num = $this->where('id', $id)->update([
+            'password' => password_hash('123456', PASSWORD_DEFAULT)
+        ]);
         return $num;
     }
 
@@ -123,6 +125,7 @@ class User extends Model
         if (empty($data['id'])) {
             if ($data['email'] && $this->isExistence(['email' => $data['email']]))
                 return return_code(1001, '邮箱已存在');
+
             if ($data['phone'] && $this->isExistence(['phone' => $data['phone']]))
                 return return_code(1002, '手机号码已存在');
 
@@ -130,6 +133,7 @@ class User extends Model
         } else {
             if (empty($model->email) && $data['email'] && $this->isExistence(['email' => $data['email']]))
                 return return_code(1001, '邮箱已存在');
+
             if (empty($model->phone) && $data['phone'] && $this->isExistence(['phone' => $data['phone']]))
                 return return_code(1002, '手机号码已存在');
         }
@@ -186,7 +190,9 @@ class User extends Model
             return return_code(1001, '原密码错误');
         }
 
-        $num = $this->where('id', $id)->update(['password' => password_hash($newPwd, PASSWORD_DEFAULT)]);
+        $num = $this->where('id', $id)->update([
+            'password' => password_hash($newPwd, PASSWORD_DEFAULT)
+        ]);
 
         return return_code($num ? 0 : 1002, $num ? '操作成功' : '操作失败');
     }

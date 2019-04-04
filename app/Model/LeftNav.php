@@ -35,7 +35,7 @@ class LeftNav extends Model
 
         $idArr = $this->where(['parent_id' => 0, 'status' => 1])->get(['id'])->toArray();
         $idArr = array_merge(array(0), array_pluck($idArr,'id'));
-        $nav = $this->whereIn('parent_id' , $idArr)->whereIn('left_nav.id', $userPermission)->where('status', 1)
+        $nav = $this->whereIn('parent_id', $idArr)->whereIn('left_nav.id', $userPermission)->where('status', 1)
             ->orderBy('left_nav.sort', 'asc')->orderBy('left_nav.id', 'asc')
             ->leftJoin('font_icon', function ($join) {
                 $join->on('left_nav.icon_id', '=', 'font_icon.id');
@@ -54,7 +54,9 @@ class LeftNav extends Model
 
             $retData[$k1]['text'] = $v1['title'];
             $retData[$k1]['icon'] = $v1['code'];
-            $retData[$k1]['href'] = $v1['url'] ? $boolStr == false ? route($v1['url']) : $v1['url'] : '';
+            $retData[$k1]['href'] = $v1['url']
+                ? $boolStr == false ? route($v1['url']) : $v1['url']
+                : '';
             $retData[$k1]['target'] = $v1['target'] == 1 ? true : false;
 
             if (isset($v1['subset'])) {
@@ -64,7 +66,9 @@ class LeftNav extends Model
 
                     $retData[$k1]['subset'][$k2]['text'] = $v2['title'];
                     $retData[$k1]['subset'][$k2]['icon'] = $v2['code'];
-                    $retData[$k1]['subset'][$k2]['href'] = $v2['url'] ? $boolStr == false ? route($v2['url']) : $v2['url'] : '';
+                    $retData[$k1]['subset'][$k2]['href'] = $v2['url']
+                        ? $boolStr == false ? route($v2['url']) : $v2['url']
+                        : '';
                     $retData[$k1]['subset'][$k2]['target'] = $v2['target'] == 1 ? true : false;
                 }
             }
@@ -87,7 +91,10 @@ class LeftNav extends Model
             ->leftJoin('font_icon', function ($join) {
                 $join->on('left_nav.icon_id', '=', 'font_icon.id');
             })
-            ->first(['left_nav.id', 'parent_id', 'left_nav.sort', 'target', 'status', 'title', 'icon_id', 'url', 'code']);
+            ->first([
+                'left_nav.id', 'parent_id', 'left_nav.sort', 'target', 'status', 'title', 'icon_id', 'url', 'code'
+            ]);
+
         return $info;
     }
 
@@ -172,6 +179,7 @@ class LeftNav extends Model
     {
         $idArr = explode(',', $ids);
         $num = $this->whereIn('id', $idArr)->delete();
+
         return $num;
     }
 
@@ -184,10 +192,13 @@ class LeftNav extends Model
      */
     public function navTree()
     {
-        $list = $this->orderBy('sort', 'asc')->orderBy('id', 'asc')
+        $list = $this
+            ->orderBy('sort', 'asc')
+            ->orderBy('id', 'asc')
             ->get(['id', 'parent_id', 'title'])
             ->toArray();
         $retData = tree($list);
+
         return $retData;
     }
 
@@ -202,7 +213,8 @@ class LeftNav extends Model
     public function navList(string $ids)
     {
         $idArr = explode(',', $ids);
-        $list = $this->whereIn('id', $idArr)
+        $list = $this
+            ->whereIn('id', $idArr)
             ->get(['id', 'status', 'title', 'url'])
             ->toArray();
 

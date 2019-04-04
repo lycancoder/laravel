@@ -99,6 +99,7 @@ class UserGroup extends Model
     {
         $idArr = explode(',', $ids);
         $num = $this->whereIn('id', $idArr)->delete();
+
         return $num;
     }
 

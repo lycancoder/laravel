@@ -147,7 +147,7 @@ if (!function_exists("request_curl")) {
         }
 
         // 是否是 POST 请求
-        if ($method == "POST") {
+        if (mb_strtoupper($method) == "POST") {
             curl_setopt($ch, CURLOPT_POST, true); // 设置为 POST 请求
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data); // 设置POST的请求数据
         }
@@ -191,6 +191,7 @@ if (!function_exists("array_reordering")) {
         foreach ($data as $key => $value) {
             $distance[$key] = $value[$field];
         }
+
         array_multisort($distance, mb_strtolower($sort) == "asc" ? SORT_ASC : SORT_DESC, $data);
 
         // 重新处理键值
@@ -220,8 +221,8 @@ if (!function_exists("jh_recent_holiday")) {
         // 请求聚合数据接口获取数据
         $url = "http://v.juhe.cn/calendar/month";
         $params = http_build_query(array(
-            "key" => env("JUHE_CALENDAR_APP_KEY", ""),// 您申请的appKey
-            "year-month" => $yearMonth,// 指定月份,格式为YYYY-MM,如月份和日期小于10,则取个位,如:2012-1
+            "key" => env("JUHE_CALENDAR_APP_KEY", ""), // 您申请的appKey
+            "year-month" => $yearMonth, // 指定月份,格式为YYYY-MM,如月份和日期小于10,则取个位,如:2012-1
         ));
         $content = request_curl($url . "?" . $params, false, "GET");
         $result = json_decode($content, true);

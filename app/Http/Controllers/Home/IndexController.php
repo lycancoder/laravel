@@ -17,5 +17,4 @@ class IndexController extends Controller
         return p(123);
         //return 'Home';
     }
-
 }

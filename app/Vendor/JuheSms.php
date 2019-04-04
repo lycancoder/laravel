@@ -66,7 +66,9 @@ class JuheSms
         $httpInfo = array();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22');
+        curl_setopt($ch, CURLOPT_USERAGENT,
+            'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.22 '
+            . '(KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22');
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -121,12 +123,12 @@ class JuheSms
                 // 状态为0，说明短信发送成功
                 // echo "短信发送成功,短信ID：".$result['result']['sid'];
                 return array('code' => 0, 'msg' => '短信发送成功，短信ID：' . $result['result']['sid'], 'data' => $result);
-            }else{
+            } else {
                 // 状态非0，说明失败
                 // echo "短信发送失败(".$error_code.")：".$result['reason'];
                 return array('code' => $error_code, 'msg' => '短信发送失败：' . $result['reason'], 'data' => $result);
             }
-        }else{
+        } else {
             // 返回内容异常，以下可根据业务逻辑自行修改
             // echo "请求发送短信失败";
             return array('code' => 1, 'msg' => '请求发送短信失败', 'data' => '');

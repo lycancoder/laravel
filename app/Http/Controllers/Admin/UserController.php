@@ -91,7 +91,6 @@ class UserController extends Controller
     {
         $model = new UserGroup();
         $getData = $request->all();
-
         $data = $model->getInfoId($getData['id']);
 
         return view('admin.user.groupEdit', compact('data'));
@@ -159,7 +158,7 @@ class UserController extends Controller
 
         $data = $model
             ->when(isset($getData['name']), function ($query) use ($getData) {
-                return $query->where('user.name', 'like', '%'.$getData['name'].'%');
+                return $query->where('user.name', 'like', '%' . $getData['name'] . '%');
             })
             ->when(isset($getData['email']), function ($query) use ($getData) {
                 return $query->where('email', $getData['email']);
@@ -324,7 +323,7 @@ class UserController extends Controller
 
         $data = $model
             ->when(isset($getData['name']), function ($query) use ($getData) {
-                return $query->where('name', 'like', '%'.$getData['name'].'%');
+                return $query->where('name', 'like', '%' . $getData['name'] . '%');
             })
             ->orderBy('user_login_log.created_at', 'desc')
             ->leftJoin('user', function ($join) {
@@ -403,6 +402,7 @@ class UserController extends Controller
         $getData = $request->all();
         $getData = json_decode($getData['data'], true);
         $ret = $model->changeHeader(session('loginUser')['id'], $getData['fid']);
+
         if ($ret["code"] === 0) {
             $userData = session("loginUser");
             $userData["header"] = $getData["furl"];

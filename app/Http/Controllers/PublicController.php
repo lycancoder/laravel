@@ -27,8 +27,9 @@ class PublicController extends Controller
         $getData = $request->all();
 
         // 文件后缀类型（''-不做限制）
-        $defaultExts = ['jpg','jpeg','gif','png','doc','docx','xls','xlsx','ppt','pptx','pdf'];
+        $defaultExts = ['jpg', 'jpeg', 'gif', 'png', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf'];
         $exts = isset($getData['exts']) ? $getData['exts'] : $defaultExts;
+
         if (!empty($exts)) {
             if (is_string($exts)) {
                 $exts = explode(',', $exts);
@@ -51,13 +52,13 @@ class PublicController extends Controller
 
         // 检测上传文件后缀
         $ext = $file->getClientOriginalExtension();
-        if ( !(empty($exts) || in_array(strtolower($ext), $exts)) ) {
+        if (!(empty($exts) || in_array(strtolower($ext), $exts))) {
             return response()->json(return_code(1002, 'Upload file suffix not allowed'));
         }
 
         // 检测上传文件大小
         $size = $file->getClientSize();
-        if ( !(0 == $maxSize || $size <= $maxSize) ) {
+        if (!(0 == $maxSize || $size <= $maxSize)) {
             return response()->json(return_code(1003, 'Upload file size does not match'));
         }
 
@@ -93,7 +94,7 @@ class PublicController extends Controller
             'url' => $savePath,
             'fid' => $saveData['data']['id']
         ];
+
         return response()->json(return_code(0, 'Successful upload', $retData));
     }
-
 }

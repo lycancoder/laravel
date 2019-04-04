@@ -24,6 +24,7 @@ class IndexController extends Controller
     {
         $getData = $request->all();
         $method = $getData["method"];
+
         if (!method_exists($this, $method)) {
             echo json_encode(array("code" => 1, "msg" => $method."方法不存在", "data" => $getData));
             exit();
@@ -55,6 +56,6 @@ class IndexController extends Controller
      */
     private function home($getData = array())
     {
-        $this->returnJson(return_code(0,"success", $getData));
+        $this->returnJson(return_code(0, "success", $getData));
     }
 }

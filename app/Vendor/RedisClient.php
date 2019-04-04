@@ -335,6 +335,7 @@ class RedisClient
     {
         $key = $this->setKey($key);
         $res = Redis::lrange($key, $start, $stop);
+
         foreach ($res as &$val) {
             $val = $this->getVal($val);
         }
