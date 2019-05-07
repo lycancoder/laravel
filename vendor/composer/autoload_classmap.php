@@ -6,8 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\Swoole' => $baseDir . '/app/Console/Commands/Swoole.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Handlers\\Swoole' => $baseDir . '/app/Handlers/Swoole.php',
     'App\\Http\\Controllers\\Admin\\CommonController' => $baseDir . '/app/Http/Controllers/Admin/CommonController.php',
     'App\\Http\\Controllers\\Admin\\IndexController' => $baseDir . '/app/Http/Controllers/Admin/IndexController.php',
     'App\\Http\\Controllers\\Admin\\NavController' => $baseDir . '/app/Http/Controllers/Admin/NavController.php',

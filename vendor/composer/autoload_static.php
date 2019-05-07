@@ -338,8 +338,10 @@ class ComposerStaticInit85d9d9c35806b826f9cd04a382a4eb8a
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\Swoole' => __DIR__ . '/../..' . '/app/Console/Commands/Swoole.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Handlers\\Swoole' => __DIR__ . '/../..' . '/app/Handlers/Swoole.php',
         'App\\Http\\Controllers\\Admin\\CommonController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CommonController.php',
         'App\\Http\\Controllers\\Admin\\IndexController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/IndexController.php',
         'App\\Http\\Controllers\\Admin\\NavController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/NavController.php',
