@@ -14,7 +14,7 @@
         <input type="hidden" name="id" value="{{ $data['id'] ?? '' }}">
 
         <div class="layui-form-item">
-            <label class="layui-form-label">键名 <i class="layui-icon" title="键名填写后不可更改，只能是字母和下划线组成，并且只能以字母开头和结尾，大于2个字符">&#xe702;</i></label>
+            <label class="layui-form-label ly-label">键名 <i class="layui-icon" title="键名填写后不可更改，只能是字母和下划线组成，并且只能以字母开头和结尾，大于2个字符">&#xe702;</i></label>
             <div class="layui-input-block">
                 <input type="text" name="key" lay-verify="key" autocomplete="off" placeholder="示例：VERSION" class="layui-input" value="{{ $data['key'] }}" @if($data['key']) readonly @endif>
             </div>
