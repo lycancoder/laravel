@@ -1,5 +1,10 @@
 @extends('admin.base')
 @section('content')
+    <style>
+        .ly-label {position: relative;}
+        .ly-label i {position: absolute;top: 0;right: 0;color: #a0a0a0;cursor: pointer;}
+    </style>
+
     <body class="body">
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>用户组编辑</legend>
