@@ -36,6 +36,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::get('/memberPage', 'VideoContestController@memberPage')->name('admin.videoContest.memberPage');
         Route::get('/userChangeHeader', 'UserController@userChangeHeader')->name('admin.user.userChangeHeader');
         Route::post('/userChangeHeaderSubmit', 'UserController@userChangeHeaderSubmit')->name('admin.user.userChangeHeaderSubmit');
+        Route::get('/indexPage', 'ConfigController@indexPage')->name('admin.config.indexPage');
+        Route::get('/indexPageData', 'ConfigController@indexPageData')->name('admin.config.indexPageData');
+        Route::get('/indexEdit', 'ConfigController@indexEdit')->name('admin.config.indexEdit');
 
         Route::group(['middleware' => 'adminUserPermission'], function () {
             Route::post('/leftNavEditSubmit', 'NavController@leftNavEditSubmit')->name('admin.nav.leftNavEditSubmit');
@@ -56,6 +59,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
             Route::post('/userEditSubmit', 'UserController@userEditSubmit')->name('admin.user.userEditSubmit');
 
             Route::post('/delVideoContestData', 'VideoContestController@delVideoContestData')->name('admin.videoContest.delVideoContestData');
+
+            Route::post('/configEditSubmit', 'ConfigController@configEditSubmit')->name('admin.config.configEditSubmit');
         });
     });
 });

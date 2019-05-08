@@ -12,13 +12,13 @@
 */
 
 Route::post('/uploadFile', 'PublicController@uploadFile')->name('uploadFile');
-Route::get('/', function (){
-    return view('welcome');
-});
+//Route::get('/', function (){
+//    return view('welcome');
+//});
 
 // Home 路由组，添加 home 前缀（访问：localhost/home），去掉 prefix（访问：localhost）
-Route::group(['namespace' => 'Home', 'prefix' => 'home'], function () {
+Route::group(['namespace' => 'Home', 'prefix' => ''], function () {
     // 控制器在 App\Http\Controllers\Home 命名空间下
-    Route::get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
+    Route::get('/', 'IndexController@index')->name('home.index.index');
 });
 

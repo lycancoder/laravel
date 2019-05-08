@@ -24,7 +24,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">验证码：</label>
                 <div class="layui-input-inline">
-                    <input style="float: left;width: 5.9rem;" type="text" name="code" class="layui-input"
+                    <input style="float: left;width: 50%;" type="text" name="code" class="layui-input"
                            onkeyup="this.value=this.value.replace(/\D/g,'')" lay-verify="code"
                            placeholder="验证码" maxlength="4"/>
                     <img style="float: left;" title="点击切换验证码"
