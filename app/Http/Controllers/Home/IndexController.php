@@ -14,7 +14,6 @@ class IndexController extends Controller
 {
     public function index()
     {
-        return p(123);
-        //return 'Home';
+        return view('home.index.timeCompass');
     }
 }
