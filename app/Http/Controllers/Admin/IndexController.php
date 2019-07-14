@@ -51,9 +51,7 @@ class IndexController extends Controller
      */
     public function logout()
     {
-        session()->forget('loginUser');
-        session()->forget('LoginUserPermission');
-
+        session()->flush(); // 清空所有 session
         return redirect()->route('admin.index.login')->with('msg', '退出成功');
     }
 
@@ -110,12 +108,11 @@ class IndexController extends Controller
             return redirect()->back()->withErrors('该账号已被禁用');
         }
 
-        if ($userData["header_id"] != null || $userData["header_id"] != '') {
+        $userData['header'] = "img/default-head.png";
+        if ($userData["header_id"]) {
             $file = new File();
             $filePath = $file->getPath($userData["header_id"]);
             $userData['header'] = $filePath["save_path"];
-        } else {
-            $userData['header'] = "img/code.png";
         }
 
         unset($userData["header_id"]);

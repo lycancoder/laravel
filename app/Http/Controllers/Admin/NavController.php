@@ -84,7 +84,7 @@ class NavController extends Controller
             'count' => $data['total'],
             'data' => $data['data'],
             'parent_id'=> $getData['id'],
-            'grandpa_id'=> $grandpa_id,
+            'grandpa_id'=> $grandpa_id
         ));
     }
 

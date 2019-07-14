@@ -1,5 +1,6 @@
 @extends('admin.base')
-@section('content')
+
+@section('css')
 <style>
     .cate-box{margin-bottom: 15px;padding-bottom:10px;border-bottom: 1px solid #f0f0f0;}
     .cate-box dt{margin-bottom: 10px;}
@@ -8,7 +9,9 @@
     .cate-box dd .cate-second{margin-bottom: 10px;}
     .cate-box dd .cate-third{padding:0 40px;margin-bottom: 10px;}
 </style>
+@endsection
 
+@section('content')
 <body class="body">
     <div class="layui-fluid">
         <div class="layui-card">

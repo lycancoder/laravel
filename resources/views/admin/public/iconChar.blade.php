@@ -1,7 +1,10 @@
 @extends('admin.base')
-@section('content')
-<link rel="stylesheet" href="{{ asset('css/iconChar.css') }}">
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/iconChar.css') }}">
+@endsection
+
+@section('content')
 <body class="body">
     <div class="ly-div-ul">
         <ul class="site-doc-icon">
@@ -24,6 +27,7 @@
     </div>
 </body>
 @endsection
+
 @section('script')
 <script type="text/javascript">
     layui.use(['element', 'layer'], function () {

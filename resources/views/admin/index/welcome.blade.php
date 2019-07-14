@@ -1,4 +1,5 @@
 @extends('admin.base')
+
 @section('content')
 <body class="body">
     <div class="my-page-box" style="margin-top: 5%;">
@@ -12,5 +13,6 @@
     </div>
 </body>
 @endsection
+
 @section('script')
 @endsection

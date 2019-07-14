@@ -1,11 +1,14 @@
 @extends('admin.base')
-@section('content')
-    <style>
-        .ly-label {position: relative;}
-        .ly-label i {position: absolute;top: 0;right: 0;color: #a0a0a0;cursor: pointer;}
-    </style>
 
-    <body class="body">
+@section('css')
+<style>
+    .ly-label {position: relative;}
+    .ly-label i {position: absolute;top: 0;right: 0;color: #a0a0a0;cursor: pointer;}
+</style>
+@endsection
+
+@section('content')
+<body class="body">
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>用户组编辑</legend>
     </fieldset>
@@ -41,61 +44,62 @@
             </div>
         </div>
     </form>
-    </body>
+</body>
 @endsection
-@section('script')
-    <script type="text/javascript">
-        layui.use(['form', 'layedit', 'laydate'], function(){
-            var form = layui.form;
-            var layer = layui.layer;
-            var layedit = layui.layedit;
-            var laydate = layui.laydate;
 
-            // 数据验证
-            form.verify({
-                key: function(value) {
-                    if (value.length <= 2 || !f_verify_key(value)) {
-                        return '配置键名输入有误';
-                    }
-                },
-                value: function(value) {
-                    if (value.length < 1) {
-                        return '配置值不能为空';
+@section('script')
+<script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form;
+        var layer = layui.layer;
+        var layedit = layui.layedit;
+        var laydate = layui.laydate;
+
+        // 数据验证
+        form.verify({
+            key: function(value) {
+                if (value.length <= 2 || !f_verify_key(value)) {
+                    return '配置键名输入有误';
+                }
+            },
+            value: function(value) {
+                if (value.length < 1) {
+                    return '配置值不能为空';
+                }
+            }
+        });
+
+        // 监听提交
+        form.on('submit(submit)', function(data){
+            var submitThis = $(this);
+            submitThis.attr('disabled', true);
+            // 提交数据
+            $.ajax({
+                url: '{{ route('admin.config.configEditSubmit') }}',
+                type: 'post',
+                dataType: 'json',
+                data: {'data' : JSON.stringify(data.field)},
+                success: function (d) {
+                    if (d.code == 0) {
+                        layer.msg(d.msg, {time: 2000}, function () {
+                            // 关闭当前页面
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        });
+                    } else {
+                        submitThis.attr('disabled', false);
+                        layer.msg(d.msg);
                     }
                 }
             });
 
-            // 监听提交
-            form.on('submit(submit)', function(data){
-                var submitThis = $(this);
-                submitThis.attr('disabled', true);
-                // 提交数据
-                $.ajax({
-                    url: '{{ route('admin.config.configEditSubmit') }}',
-                    type: 'post',
-                    dataType: 'json',
-                    data: {'data' : JSON.stringify(data.field)},
-                    success: function (d) {
-                        if (d.code == 0) {
-                            layer.msg(d.msg, {time: 2000}, function () {
-                                // 关闭当前页面
-                                var index = parent.layer.getFrameIndex(window.name);
-                                parent.layer.close(index);
-                            });
-                        } else {
-                            submitThis.attr('disabled', false);
-                            layer.msg(d.msg);
-                        }
-                    }
-                });
-
-                return false; // 作用：禁止数据回调后快速刷新页面
-            });
+            return false; // 作用：禁止数据回调后快速刷新页面
         });
+    });
 
-        function f_verify_key(v) {
-            let regex = /^(?!_)(?!.*?_$)[a-zA-Z_\u4e00-\u9fa5]+$/i;
-            return regex.test(v); // 验证：true-正确；false-错误
-        }
-    </script>
+    function f_verify_key(v) {
+        let regex = /^(?!_)(?!.*?_$)[a-zA-Z_\u4e00-\u9fa5]+$/i;
+        return regex.test(v); // 验证：true-正确；false-错误
+    }
+</script>
 @endsection

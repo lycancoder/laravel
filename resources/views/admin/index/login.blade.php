@@ -1,4 +1,5 @@
 @extends('admin.base')
+
 @section('content')
 <body class="login-body body" onkeypress="return f_keyword_click(event, '#sub')">
     <div class="login-box">
@@ -40,6 +41,7 @@
     </div>
 </body>
 @endsection
+
 @section('script')
 <script type="text/javascript">
     layui.use(['form','layer'], function () {

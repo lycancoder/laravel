@@ -1,11 +1,13 @@
 @extends('admin.base')
-@section('content')
-    <style>
-        .ly-label {position: relative;}
-        .ly-label i {position: absolute;top: 0;right: 0;color: #a0a0a0;cursor: pointer;}
-    </style>
+@section('css')
+<style>
+    .ly-label {position: relative;}
+    .ly-label i {position: absolute;top: 0;right: 0;color: #a0a0a0;cursor: pointer;}
+</style>
+@endsection
 
-    <body class="body">
+@section('content')
+<body class="body">
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>菜单编辑</legend>
     </fieldset>
@@ -67,66 +69,67 @@
             </div>
         </div>
     </form>
-    </body>
+</body>
 @endsection
+
 @section('script')
-    <script type="text/javascript">
-        layui.use(['form', 'layedit', 'laydate'], function(){
-            var form = layui.form;
-            var layer = layui.layer;
-            var layedit = layui.layedit;
-            var laydate = layui.laydate;
+<script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form;
+        var layer = layui.layer;
+        var layedit = layui.layedit;
+        var laydate = layui.laydate;
 
-            // 监听 启用/停用 开关
-            form.on('switch(switchStatus)', function(data){
-                $('[name="status"]').val(this.checked ? '1' : '2')
-            });
+        // 监听 启用/停用 开关
+        form.on('switch(switchStatus)', function(data){
+            $('[name="status"]').val(this.checked ? '1' : '2')
+        });
 
-            // 数据验证
-            form.verify({
-                name: function(value){
-                    if(value.length < 2){
-                        return '用户名至少得2个字符';
-                    }
-                },
-                email: function(value){
-                    if (value.length > 0 && !f_verify_email(value)) {
-                        return '邮箱地址不合法';
-                    }
-                },
-                phone: function (value) {
-                    if (value.length == 0 || !f_verify_phone(value)) {
-                        return '手机号码不合法';
+        // 数据验证
+        form.verify({
+            name: function(value){
+                if(value.length < 2){
+                    return '用户名至少得2个字符';
+                }
+            },
+            email: function(value){
+                if (value.length > 0 && !LyitePackage.checkStr(value, 'email')) {
+                    return '邮箱地址不合法';
+                }
+            },
+            phone: function (value) {
+                if (value.length == 0 || !LyitePackage.checkStr(value, 'phone')) {
+                    return '手机号码不合法';
+                }
+            }
+        });
+
+        // 监听提交
+        form.on('submit(submit)', function(data){
+            var submitThis = $(this);
+            submitThis.attr('disabled', true);
+            // 提交数据
+            $.ajax({
+                url: '{{ route('admin.user.userEditSubmit') }}',
+                type: 'post',
+                dataType: 'json',
+                data: {'data' : JSON.stringify(data.field)},
+                success: function (d) {
+                    if (d.code == 0) {
+                        layer.msg(d.msg, {time: 2000}, function () {
+                            // 关闭当前页面
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        });
+                    } else {
+                        submitThis.attr('disabled', false);
+                        layer.msg(d.msg);
                     }
                 }
             });
 
-            // 监听提交
-            form.on('submit(submit)', function(data){
-                var submitThis = $(this);
-                submitThis.attr('disabled', true);
-                // 提交数据
-                $.ajax({
-                    url: '{{ route('admin.user.userEditSubmit') }}',
-                    type: 'post',
-                    dataType: 'json',
-                    data: {'data' : JSON.stringify(data.field)},
-                    success: function (d) {
-                        if (d.code == 0) {
-                            layer.msg(d.msg, {time: 2000}, function () {
-                                // 关闭当前页面
-                                var index = parent.layer.getFrameIndex(window.name);
-                                parent.layer.close(index);
-                            });
-                        } else {
-                            submitThis.attr('disabled', false);
-                            layer.msg(d.msg);
-                        }
-                    }
-                });
-
-                return false; // 作用：禁止数据回调后快速刷新页面
-            });
+            return false; // 作用：禁止数据回调后快速刷新页面
         });
-    </script>
+    });
+</script>
 @endsection

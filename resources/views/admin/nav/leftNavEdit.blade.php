@@ -1,10 +1,13 @@
 @extends('admin.base')
-@section('content')
+
+@section('css')
 <style>
     .ly-label {position: relative;}
     .ly-label i {position: absolute;top: 0;right: 0;color: #a0a0a0;cursor: pointer;}
 </style>
+@endsection
 
+@section('content')
 <body class="body">
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>菜单编辑</legend>
@@ -68,6 +71,7 @@
     </form>
 </body>
 @endsection
+
 @section('script')
 <script type="text/javascript">
     layui.use(['form', 'layedit', 'laydate'], function(){

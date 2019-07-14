@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Logic\Timer;
 use App\Model\Config;
 use Illuminate\Http\Request;
 
@@ -47,17 +48,9 @@ class ConfigController extends Controller
             ->paginate($request->get('limit', 10))
             ->toArray();
 
-        foreach ($data['data'] as $key => &$value) {
-            $value['updated_at'] = date('Y-m-d H:i:s', $value['updated_at']);
-            $value['created_at'] = date('Y-m-d H:i:s', $value['created_at']);
-        }
+        $data['data'] = Timer::timestampToYmdHis($data['data']);
 
-        return response()->json(array(
-            'code' => 0,
-            'msg' => '加载成功',
-            'count' => $data['total'],
-            'data' => $data['data'],
-        ));
+        return response()->json(['code' => 0, 'msg' => '加载成功', 'count' => $data['total'], 'data' => $data['data']]);
     }
 
     /**

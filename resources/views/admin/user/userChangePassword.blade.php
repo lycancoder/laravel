@@ -1,42 +1,44 @@
 @extends('admin.base')
+
 @section('content')
 <body class="body">
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>修改密码</legend>
-</fieldset>
-<form class="layui-form layui-form-pane" method="" action="">
-    {{ csrf_field() }}
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>修改密码</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane" method="" action="">
+        {{ csrf_field() }}
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">原密码</label>
-        <div class="layui-input-block">
-            <input type="password" name="oldPassword" lay-verify="required" autocomplete="off" class="layui-input" value="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">原密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="oldPassword" lay-verify="required" autocomplete="off" class="layui-input" value="">
+            </div>
         </div>
-    </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">新密码</label>
-        <div class="layui-input-block">
-            <input type="password" name="newPassword" lay-verify="newPassword" autocomplete="off" class="layui-input" value="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="newPassword" lay-verify="newPassword" autocomplete="off" class="layui-input" value="">
+            </div>
         </div>
-    </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">确认新密码</label>
-        <div class="layui-input-block">
-            <input type="password" name="surePassword" lay-verify="surePassword" autocomplete="off" class="layui-input" value="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认新密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="surePassword" lay-verify="surePassword" autocomplete="off" class="layui-input" value="">
+            </div>
         </div>
-    </div>
 
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 </body>
 @endsection
+
 @section('script')
 <script type="text/javascript">
     layui.use(['form', 'layedit', 'laydate'], function(){

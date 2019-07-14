@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Logic\Timer;
 use App\Model\User;
 use App\Model\UserGroup;
 use App\Model\UserLoginLog;
@@ -49,17 +50,9 @@ class UserController extends Controller
             ->paginate($request->get('limit', 10))
             ->toArray();
 
-        foreach ($data['data'] as $key => $value) {
-            $data['data'][$key]['updated_at'] = date('Y-m-d H:i:s', $value['updated_at']);
-            $data['data'][$key]['created_at'] = date('Y-m-d H:i:s', $value['created_at']);
-        }
+        $data['data'] = Timer::timestampToYmdHis($data['data']);
 
-        return response()->json(array(
-            'code' => 0,
-            'msg' => '加载成功',
-            'count' => $data['total'],
-            'data' => $data['data'],
-        ));
+        return response()->json(['code' => 0, 'msg' => '加载成功', 'count' => $data['total'], 'data' => $data['data']]);
     }
 
     /**
@@ -177,17 +170,9 @@ class UserController extends Controller
             ])
             ->toArray();
 
-        foreach ($data['data'] as $key => $value) {
-            $data['data'][$key]['updated_at'] = date('Y-m-d H:i:s', $value['updated_at']);
-            $data['data'][$key]['created_at'] = date('Y-m-d H:i:s', $value['created_at']);
-        }
+        $data['data'] = Timer::timestampToYmdHis($data['data']);
 
-        return response()->json(array(
-            'code' => 0,
-            'msg' => '加载成功',
-            'count' => $data['total'],
-            'data' => $data['data'],
-        ));
+        return response()->json(['code' => 0, 'msg' => '加载成功', 'count' => $data['total'], 'data' => $data['data']]);
     }
 
     /**
@@ -338,12 +323,7 @@ class UserController extends Controller
             $data['data'][$key]['created_at'] = date('Y-m-d H:i:s', $value['created_at']);
         }
 
-        return response()->json(array(
-            'code' => 0,
-            'msg' => '加载成功',
-            'count' => $data['total'],
-            'data' => $data['data'],
-        ));
+        return response()->json(['code' => 0, 'msg' => '加载成功', 'count' => $data['total'], 'data' => $data['data']]);
     }
 
     /**

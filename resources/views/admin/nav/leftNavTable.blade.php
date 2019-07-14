@@ -1,9 +1,12 @@
 @extends('admin.base')
-@section('content')
+
+@section('css')
 <style>
     .ly-layui-btn {height: unset;line-height: unset;border-radius: 5px;}
 </style>
+@endsection
 
+@section('content')
 <body class="body">
     <input type="hidden" name="parent_id" value="">
     <input type="hidden" name="grandpa_id" value="">
@@ -28,6 +31,7 @@
     <div id="dateTable" lay-filter="dateTable"></div>
 </body>
 @endsection
+
 @section('script')
 <script type="text/javascript" src="{{ asset('js/layui_admin.js') }}"></script>
 

@@ -6,7 +6,7 @@
  * Time: 16:15
  */
 
-namespace App\Handlers;
+namespace App\Logic;
 
 use App\Vendor\RedisClient;
 

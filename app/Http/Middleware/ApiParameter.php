@@ -15,48 +15,38 @@ class ApiParameter
      */
     public function handle($request, Closure $next)
     {
-        // http://localhost/api/index?timestamp=1547047192215&nonce=6020526690292680&signature
-        // =6b2fd274073f1de2308403cb6e0cb78f89f3b66c9dbf647cb7cf224a270b7de4&src=lyite&method=index
-        $token = 'lyite1001'; // 可以由英文和数字组成，自行指定
-        $src = 'lyite'; // 自行指定
+        // http://localhost/api/index?sign=154704719221560205266902926806b2fd274073f1de2308403c
+        // b6e0cb78f89f3b66c9dbf647cb7cf224a270b7de4lyite&method=index
+        $token = 'lyite.com';
+        $src = 'lyite';
         $getData = $request->all();
+
         if (
-            !isset($getData['timestamp']) ||
-            !isset($getData['nonce']) ||
-            !isset($getData['signature']) ||
-            !isset($getData['src']) ||
-            !isset($getData['method'])
+            !isset($getData['sign']) || empty($getData['sign']) ||
+            !isset($getData['method']) || empty($getData['method'])
         ) {
-            echo json_encode(array("code" => 1, "msg" => "url请求参数错误", "data" => $getData));
+            echo json_encode(array("code" => 1, "msg" => "url请求参数错误", "data" => []));
             exit();
         }
 
-        $timestamp = $getData['timestamp']; // 13位长度时间戳
-        $nonce = $getData['nonce']; // 随机数
-
-        if (13 != strlen($timestamp)) {
-            echo json_encode(array("code" => 1, "msg" => "时间格式错误", "data" => $getData));
+        if (98 != strlen($getData['sign'])) {
+            echo json_encode(array("code" => 1, "msg" => "签名错误", "data" => []));
             exit();
         }
 
-        if (16 != strlen($nonce)) {
-            echo json_encode(array("code" => 1, "msg" => "随机数格式错误", "data" => $getData));
+        $getTimestamp = substr($getData['sign'], 0, 13);
+        $getNonce     = substr($getData['sign'], 13, 16);
+        $getSrc       = substr($getData['sign'], -5, 5);
+        $getSignature = substr($getData['sign'], 29, 64);
+
+        if ($src != $getSrc) {
+            echo json_encode(array("code" => 1, "msg" => "签名错误", "data" => []));
             exit();
         }
 
-        $signature = self::SHA256("{$timestamp}{$nonce}{$token}");
-        if ($signature != $getData['signature']) {
-            echo json_encode(array("code" => 1, "msg" => "签名格式错误", "data" => $getData));
-            exit();
-        }
-
-        if ($src != $getData['src']) {
-            echo json_encode(array("code" => 1, "msg" => "src格式错误", "data" => $getData));
-            exit();
-        }
-
-        if ("" == $getData['method']) {
-            echo json_encode(array("code" => 1, "msg" => "方法不能为空", "data" => $getData));
+        $signature = self::SHA256("{$getTimestamp}{$getNonce}{$token}");
+        if ($signature != $getSignature) {
+            echo json_encode(array("code" => 1, "msg" => "签名错误", "data" => []));
             exit();
         }
 
@@ -100,7 +90,7 @@ class ApiParameter
      */
     protected function setNonce($length = 0)
     {
-        $chars = '0123456789';
+        $chars = '0123456789abcdefghijkmnpqrstuvwxyz';
         $charsLength = strlen($chars);
 
         $nonce = '';

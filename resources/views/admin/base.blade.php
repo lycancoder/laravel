@@ -12,12 +12,16 @@
     <link rel="stylesheet" href="{{ asset('plugs/layui/css/layui.css') }}">
     <link rel="stylesheet" href="{{ asset('css/layui-admin.css') }}">
     <link rel="icon" href="{{ asset('img/code.png') }}">
+
+    @yield('css')
 </head>
 
 {{-- body内容 --}}
 @yield('content')
 
-<script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/lyite-sign.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/lyite-package.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/public.js') }}"></script>
 <script type="text/javascript" src="{{ asset('plugs/layui/layui.js') }}"></script>
 <script>

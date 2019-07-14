@@ -30,7 +30,7 @@ class IndexController extends Controller
             exit();
         }
 
-        unset($getData["timestamp"], $getData["nonce"], $getData["signature"], $getData["src"], $getData["method"]);
+        unset($getData["sign"], $getData["method"]);
         $this->$method($getData);
     }
 
