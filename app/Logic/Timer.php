@@ -15,8 +15,8 @@ Class Timer
     static public function timestampToYmdHis($params = array())
     {
         foreach ($params as $key => &$value) {
-            $value['create_at'] = date('Y-m-d H:i:s', $value['create_at']);
-            $value['update_at'] = date('Y-m-d H:i:s', $value['update_at']);
+            $value['created_at'] = date('Y-m-d H:i:s', $value['created_at']);
+            $value['updated_at'] = date('Y-m-d H:i:s', $value['updated_at']);
         }
 
         return $params;
