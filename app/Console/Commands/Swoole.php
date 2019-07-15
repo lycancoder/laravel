@@ -71,7 +71,7 @@ class Swoole extends Command
             'ssl_key_file' => '/usr/local/nginx/cert/214953059310619.key',
         ]);
 
-        $hander = app(\App\Handlers\Swoole::class);
+        $hander = app(\App\Logic\Swoole::class);
 
         $ws->on('open', [$hander, 'onOpen']);
 
