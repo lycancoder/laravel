@@ -19,7 +19,7 @@
             <a class="layui-btn btn-add btn-default" data-event="refreshData" title="刷新"><i class="layui-icon">&#xe666;</i></a>
             <a class="layui-btn btn-add btn-default returnParent" data-event="returnParent" title="返回上级"><i class="layui-icon">&#xe65c;</i></a>
         </span>
-            <span class="fr">
+        <span class="fr">
             <div class="layui-input-inline">
                 <input type="text" autocomplete="off" placeholder="请输入名称" class="layui-input" id="title">
             </div>
@@ -75,7 +75,7 @@
             ,cols: [[ //标题栏
                 {checkbox: true, fixed: 'left', width: 50}
                 , {title: 'ID',field: 'id', width: 70, sort: true}
-                , {title: '排序（点击修改）', field: 'sort', width: 150, align: 'center', event: 'setSort', sort: true, style:'cursor: pointer;'}
+                , {title: '排序（点击修改）', field: 'sort', width: 150, align: 'center',edit: 'text', sort: true, style:'cursor: pointer;'}
                 , {title: '图标', field: 'icon', width: 100, align: 'center'}
                 , {title: '名称', field: 'title',templet: '@verbatim<div><span title="{{ d.title }}">{{ d.title }}</span></div>@endverbatim', style:'cursor: text;'}
                 , {title: '路由', field: 'url',templet: '@verbatim<div><span title="{{ d.url }}">{{ d.url }}</span></div>@endverbatim', style:'cursor: text;'}
@@ -106,7 +106,29 @@
             var value = obj.value //得到修改后的值
                 ,data = obj.data //得到所在行所有键值
                 ,field = obj.field; //得到字段
-            layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+
+            if (!LyitePackage.checkStr(value, 'number')) {
+                layer.msg('数据不合法');
+                return false;
+            }
+
+            $.ajax({
+                url: '{{ route('admin.nav.updateSort') }}',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    'id': data.id,
+                    'sort': value
+                },
+                success: function (d) {
+                    if (d.code != 0) {
+                        layer.msg(d.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.msg('操作失败');
+                }
+            });
         });
 
 
@@ -122,31 +144,6 @@
                 });
             } else if(obj.event === 'edit'){ // 编辑
                 edit_data(data.id, data.parent_id);
-            } else if (obj.event === 'setSort') { // 排序
-                layer.prompt({
-                    formType: 2
-                    ,title: '修改 ID 为 [ '+ data.id +' ] 的排序'
-                    ,value: data.sort
-                }, function(value, index){
-                    //这里一般是发送修改的Ajax请求
-                    $.ajax({
-                        url: '{{ route('admin.nav.updateSort') }}',
-                        type: 'post',
-                        dataType: 'json',
-                        data: {
-                            'id': data.id,
-                            'sort': value
-                        },
-                        success: function (d) {
-                            layer.msg(d.msg);
-                            if (d.code == 0) {
-                                //同步更新表格和缓存对应的值
-                                obj.update({sort: value});
-                                layer.close(index);
-                            }
-                        }
-                    });
-                });
             }
         });
 

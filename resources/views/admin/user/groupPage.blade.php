@@ -57,7 +57,7 @@
             ,cols: [[ //标题栏
                 {checkbox: true, fixed: 'left', width: 50}
                 , {title: 'ID',field: 'id', width: 70, sort: true}
-                , {title: '排序（点击修改）', field: 'sort', width: 150, align: 'center', event: 'setSort', sort: true, style:'cursor: pointer;'}
+                , {title: '排序（点击修改）', field: 'sort', width: 150, align: 'center', edit: 'text', sort: true, style:'cursor: pointer;'}
                 , {title: '组名', field: 'name',templet: '@verbatim<div><span title="{{ d.name }}">{{ d.name }}</span></div>@endverbatim', style:'cursor: text;'}
                 , {title: '更新时间', field: 'updated_at', width: 170, align: 'center'}
                 , {title: '创建时间', field: 'created_at', width: 170, align: 'center'}
@@ -73,6 +73,36 @@
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
                 //curr即为当前页码、count即为数据总量
             }
+        });
+
+        // 监听单元格编辑
+        table.on('edit(dateTable)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+
+            if (!LyitePackage.checkStr(value, 'number')) {
+                layer.msg('数据不合法');
+                return false;
+            }
+
+            $.ajax({
+                url: '{{ route('admin.user.updateGroupSort') }}',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    'id': data.id,
+                    'sort': value
+                },
+                success: function (d) {
+                    if (d.code != 0) {
+                        layer.msg(d.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.msg('操作失败');
+                }
+            });
         });
 
         // 监听行工具事件
@@ -91,30 +121,6 @@
                     end: function () {
                         tableIns.reload(); // 刷新
                     }
-                });
-            } else if (obj.event === 'setSort') { // 排序
-                layer.prompt({
-                    formType: 2
-                    ,title: '修改 ID 为 [ '+ data.id +' ] 的排序'
-                    ,value: data.sort
-                }, function(value, index){
-                    $.ajax({
-                        url: '{{ route('admin.user.updateGroupSort') }}',
-                        type: 'post',
-                        dataType: 'json',
-                        data: {
-                            'id': data.id,
-                            'sort': value
-                        },
-                        success: function (d) {
-                            layer.msg(d.msg);
-                            if (d.code == 0) {
-                                //同步更新表格和缓存对应的值
-                                obj.update({sort: value});
-                                layer.close(index);
-                            }
-                        }
-                    });
                 });
             }
         });

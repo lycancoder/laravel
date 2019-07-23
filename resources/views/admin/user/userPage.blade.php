@@ -54,42 +54,68 @@
     // layui方法
     layui.use(['table', 'form', 'layer', 'vip_table'], function () {
         // 操作对象
-        var form = layui.form;
-        var table = layui.table;
-        var layer = layui.layer;
-        var vipTable = layui.vip_table;
-        var $ = layui.jquery;
+        var form = layui.form, table = layui.table, layer = layui.layer, vipTable = layui.vip_table, $ = layui.jquery;
 
         // 表格渲染
         var tableIns = table.render({
-            elem: '#dateTable' //指定原始表格元素选择器（推荐id选择器）
-            // ,height: vipTable.getFullHeight() //容器高度
-            ,id: 'dataCheck'
-            ,method: 'get'
-            ,url: '{{ route('admin.user.userPageData') }}'
-            ,cols: [[ //标题栏
-                {checkbox: true, fixed: 'left', width: 50}
-                , {title: 'ID',field: 'id', width: 70, sort: true}
-                , {title: '排序（点击修改）', field: 'sort', width: 150, align: 'center', event: 'setSort', sort: true, style:'cursor: pointer;'}
-                , {title: '用户名', field: 'name'}
-                , {title: '所在组', field: 'g_name', width: 200}
-                , {title: '邮箱', field: 'email', width: 180}
-                , {title: '手机号码', field: 'phone', width: 120}
-                , {title: '启用/停用', field: 'status', width: 100, align: 'center', templet: '#switchStatus', unresize: true}
-                , {title: '更新时间', field: 'updated_at', width: 170, align: 'center'}
-                , {title: '创建时间', field: 'created_at', width: 170, align: 'center'}
-                , {title: '操作', fixed: 'right', width: 200, align: 'center', toolbar: '#barOption'} //这里的toolbar值是模板元素的选择器
-            ]]
-            ,page: true //分页
-            ,even: true //隔行背景
-            ,loading: true //请求数据时，是否显示loading
-            ,limits: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-            ,limit: 10 //默认采用10
-            ,done: function (res, curr, count) {
+            elem: '#dateTable', //指定原始表格元素选择器（推荐id选择器）
+            // height: vipTable.getFullHeight(), //容器高度
+            id: 'dataCheck',
+            method: 'get',
+            url: '{{ route('admin.user.userPageData') }}',
+            cols: [[ //标题栏
+                {checkbox: true, fixed: 'left', width: 50},
+                {title: 'ID',field: 'id', width: 70, sort: true},
+                {title: '排序（点击修改）', field: 'sort', width: 150, align: 'center', edit: 'text', sort: true, style:'cursor: pointer;'},
+                {title: '用户名', field: 'name'},
+                {title: '所在组', field: 'g_name', width: 200},
+                {title: '邮箱', field: 'email', width: 180},
+                {title: '手机号码', field: 'phone', width: 120},
+                {title: '启用/停用', field: 'status', width: 100, align: 'center', templet: '#switchStatus', unresize: true},
+                {title: '更新时间', field: 'updated_at', width: 170, align: 'center'},
+                {title: '创建时间', field: 'created_at', width: 170, align: 'center'},
+                {title: '操作', fixed: 'right', width: 200, align: 'center', toolbar: '#barOption'} //这里的toolbar值是模板元素的选择器
+            ]],
+            page: true, //分页
+            even: true, //隔行背景
+            loading: true, //请求数据时，是否显示loading
+            limits: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+            limit: 10, //默认采用10
+            done: function (res, curr, count) {
                 //如果是异步请求数据方式，res即为你接口返回的信息。
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
                 //curr即为当前页码、count即为数据总量
             }
+        });
+
+        // 监听单元格编辑
+        table.on('edit(dateTable)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+
+            if (!LyitePackage.checkStr(value, 'number')) {
+                layer.msg('数据不合法');
+                return false;
+            }
+
+            $.ajax({
+                url: '{{ route('admin.user.updateUserSort') }}',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    'id': data.id,
+                    'sort': value
+                },
+                success: function (d) {
+                    if (d.code != 0) {
+                        layer.msg(d.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.msg('操作失败');
+                }
+            });
         });
 
         // 监听行工具事件
@@ -97,30 +123,6 @@
             var data = obj.data;
             if(obj.event === 'edit'){ // 编辑
                 edit_data(data.id);
-            } else if (obj.event === 'setSort') { // 排序
-                layer.prompt({
-                    formType: 2
-                    ,title: '修改 ID 为 [ '+ data.id +' ] 的排序'
-                    ,value: data.sort
-                }, function(value, index){
-                    $.ajax({
-                        url: '{{ route('admin.user.updateUserSort') }}',
-                        type: 'post',
-                        dataType: 'json',
-                        data: {
-                            'id': data.id,
-                            'sort': value
-                        },
-                        success: function (d) {
-                            layer.msg(d.msg);
-                            if (d.code == 0) {
-                                //同步更新表格和缓存对应的值
-                                obj.update({sort: value});
-                                layer.close(index);
-                            }
-                        }
-                    });
-                });
             } else if (obj.event === 'resetPassword') { // 重置密码
                 layer.msg('您确定要重置该用户密码？', {
                     time: false,
