@@ -286,12 +286,7 @@ CREATE TABLE `ly_user`  (
   INDEX `name`(`name`) USING BTREE,
   INDEX `email`(`email`) USING BTREE,
   INDEX `phone`(`phone`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of ly_user
--- ----------------------------
-INSERT INTO `ly_user` VALUES (1, '管理员', '1484666707@qq.com', '18883855547', '$2y$10$31cai/ErwXf4vRVoGT..SewtmyedTcjI09sldlvfLqvIns..dtM5e', 1, 1, 1, 1, NULL, 1553956966, 1543936033);
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for ly_user_group
