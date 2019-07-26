@@ -118,7 +118,7 @@ LyitePackage.checkStr = function (v, t) {
         case 'url': return /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(v);
         case 'IP': return /((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d))/.test(v);
         case 'date': return /^(\d{4})\-(\d{2})\-(\d{2}) (\d{2})(?:\:\d{2}|:(\d{2}):(\d{2}))$/.test(v) || /^(\d{4})\-(\d{2})\-(\d{2})$/.test(v);
-        case 'number': return /^[0-9]$/.test(v);
+        case 'number': return /^[0-9]+$/.test(v);
         case 'english': return /^[a-zA-Z]+$/.test(v);
         case 'chinese': return /^[\u4E00-\u9FA5]+$/.test(v);
         case 'lower': return /^[a-z]+$/.test(v);

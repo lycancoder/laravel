@@ -121,9 +121,7 @@
                     'sort': value
                 },
                 success: function (d) {
-                    if (d.code != 0) {
-                        layer.msg(d.msg);
-                    }
+                    layer.msg(d.msg);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     layer.msg('操作失败');

@@ -9,11 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Model\File;
-use App\Model\LeftNav;
-use App\Model\User;
-use App\Model\UserGroup;
-use App\Model\UserLoginLog;
+use App\Logic\Login;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -79,65 +75,27 @@ class IndexController extends Controller
     {
         $getData = $request->all();
 
+        # 验证 验证码
         $publicController = new PublicController();
         $verifyCode = $publicController->verifyCode($getData['code']);
-        if ($verifyCode['code'] != 0) {
+        if ($verifyCode['code']) {
             $request->flash();
             return redirect()->back()->withErrors($verifyCode['msg']);
         }
 
-        if (!verify_email($getData['account']) && !verify_phone($getData['account'])) {
+        $login = new Login();
+        if ('admin' == $getData['account']) { # 超管登录
+            $result = $login->adminLogin($getData);
+        } else { // 普通用户登录
+            $getData['ip'] = $request->getClientIp(); # 获取客户端IP
+            $result = $login->login($getData);
+        }
+
+        # 登录失败
+        if ($result['code']) {
             $request->flash();
-            return redirect()->back()->withErrors('账号信息输入错误');
+            return redirect()->back()->withErrors($result['msg']);
         }
-
-        $model = new User();
-        $userData = $model->checkLogin($getData['account'], verify_email($getData['account']) ? 'email' : 'phone');
-        if (!$userData) {
-            $request->flash();
-            return redirect()->back()->withErrors('账号或密码错误');
-        }
-
-        if (!password_verify($getData['password'], $userData['password'])) {
-            $request->flash();
-            return redirect()->back()->withErrors('账号或密码错误');
-        }
-
-        if ($userData['status'] != 1) {
-            $request->flash();
-            return redirect()->back()->withErrors('该账号已被禁用');
-        }
-
-        $userData['header'] = "img/default-head.png";
-        if ($userData["header_id"]) {
-            $file = new File();
-            $filePath = $file->getPath($userData["header_id"]);
-            $userData['header'] = $filePath["save_path"];
-        }
-
-        unset($userData["header_id"]);
-
-        $userGroup = new UserGroup();
-        $groupInfo = $userGroup->getInfoId($userData['g_id']);
-        $userData['groupName'] = $groupInfo['name'];
-        $userData['nav_ids'] = $groupInfo['nav_ids'];
-        session(['loginUser' => $userData]);
-
-        $leftNav = new LeftNav();
-        $navArr = $leftNav->navList($groupInfo['nav_ids']);
-        $navPermissionArr = array();
-        foreach ($navArr as $k => $v) {
-            if (empty($v['url'])) {
-                continue ;
-            }
-
-            $navPermissionArr[$v['url']] = $v['id'];
-        }
-
-        session(['LoginUserPermission' => $navPermissionArr]);
-
-        $userLoginLog = new UserLoginLog();
-        $userLoginLog->addData($userData['id'], $request->getClientIp());
 
         return redirect()->route('admin.index.index')->with('msg', '登录成功');
     }

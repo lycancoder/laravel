@@ -108,6 +108,12 @@
             <div style="margin:0 auto;width:fit-content;">
                 <div>
                     <span>Copyright &copy; {{ date('Y') }} Lycan 版权所有</span>&nbsp;&nbsp;
+                    <div style="display: inline-block;">
+                        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=50010602501715">
+                            <img src="{{ asset('img/police.png') }}" alt="渝公网安备" />
+                            <span style="display: inline-block;line-height:20px;margin-left: 5px;">渝公网安备 50010602501715号</span>
+                        </a>
+                    </div>&nbsp;&nbsp;
                     <a href="http://www.miitbeian.gov.cn/" target="_blank">渝ICP备17008552号</a>&nbsp;&nbsp;
                     <span>技术支持：Lycan</span>
                 </div>
