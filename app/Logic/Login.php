@@ -40,18 +40,8 @@ Class Login
         # 获取所有权限的ID 形成权限ID字符串
         $nav_ids = implode(',', array_column($navArr, 'id'));
 
-        # 过滤掉url值为空的数据
-        # demo:
-        # [['id'=>1,'url'=>'test'],['id'=>2,'url'=>''],['id'=>3,'url'=>'test1']]
-        # => [['id'=>1,'url'=>'test'],['id'=>2,'url'=>'test1']]
-        $navArr = array_filter($navArr, function($v) {
-            return $v['url'];
-        });
-
-        # 指定键值组成新数据
-        # demo:
-        # [['id'=>1,'url'=>'test'],['id'=>2,'url'=>'test1']] => ['test'=>1,'test1'=>2]
-        $navPermissionArr = $navArr ? array_pluck($navArr, 'id', 'url') : [];
+        # 处理权限数据
+        $navPermissionArr = $this->navTurn($navArr);
 
         # 模拟普通用户数据格式 参考普通用户登录
         $userData = [
@@ -120,18 +110,8 @@ Class Login
         $navArr = $leftNav->navList(['ids' => $groupInfo['nav_ids']]);
         $navArr = $navArr['data'];
 
-        # 过滤掉url值为空的数据
-        # demo:
-        # [['id'=>1,'url'=>'test'],['id'=>2,'url'=>''],['id'=>3,'url'=>'test1']]
-        # => [['id'=>1,'url'=>'test'],['id'=>2,'url'=>'test1']]
-        $navArr = array_filter($navArr, function($v) {
-            return $v['url'];
-        });
-
-        # 指定键值组成新数据
-        # demo:
-        # [['id'=>1,'url'=>'test'],['id'=>2,'url'=>'test1']] => ['test'=>1,'test1'=>2]
-        $navPermissionArr = $navArr ? array_pluck($navArr, 'id', 'url') : [];
+        # 处理权限数据
+        $navPermissionArr = $this->navTurn($navArr);
 
         # 保存session
         session([
@@ -144,5 +124,29 @@ Class Login
         $userLoginLog->addData($userData['id'], $params['ip']);
 
         return return_code(0, '登录成功');
+    }
+
+    /**
+     * navTurn
+     * @author Lycan LycanCoder@gmail.com
+     * @date 2019/7/26
+     *
+     * @param array $nav 原始二维权限数组
+     * @return array 一维数组
+     */
+    private function navTurn($nav = array())
+    {
+        # 过滤掉url值为空的数据
+        # demo:
+        # [['id'=>1,'url'=>'test'],['id'=>2,'url'=>''],['id'=>3,'url'=>'test1']]
+        # => [['id'=>1,'url'=>'test'],['id'=>2,'url'=>'test1']]
+        $navArr = array_filter($nav, function($v) {
+            return $v['url'];
+        });
+
+        # 指定键值组成新数据
+        # demo:
+        # [['id'=>1,'url'=>'test'],['id'=>2,'url'=>'test1']] => ['test'=>1,'test1'=>2]
+        return $navArr ? array_pluck($navArr, 'id', 'url') : [];
     }
 }
