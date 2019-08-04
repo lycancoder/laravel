@@ -15,8 +15,8 @@ class ApiParameter
      */
     public function handle($request, Closure $next)
     {
-        // http://localhost/api/index?sign=154704719221560205266902926806b2fd274073f1de2308403c
-        // b6e0cb78f89f3b66c9dbf647cb7cf224a270b7de4lyite&method=index
+        // domain/api/index?sign=1547047192215602052669029268005466a64df3
+        // 2c2eabd5e2a244288fa45cd680a166c77ad0ede3591e671e51a31lyite&method=home
         $token = 'lyite.com';
         $src = 'lyite';
         $getData = $request->all();
