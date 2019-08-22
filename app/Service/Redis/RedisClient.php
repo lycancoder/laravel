@@ -3,7 +3,7 @@
  * redis 客户端操作简单封装
  */
 
-namespace App\Vendor;
+namespace App\Service\Redis;
 
 use Illuminate\Support\Facades\Redis;
 

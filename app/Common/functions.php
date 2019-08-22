@@ -98,7 +98,7 @@ if (!function_exists('verify_email')) {
     function verify_email(string $v)
     {
         $pattern = '/^[a-z0-9]+([._-][a-z0-9]+)*@([0-9a-z]+\.[a-z]{2,14}(\.[a-z]{2})?)$/i';
-        return preg_match($pattern, $v) ? true : false;
+        return preg_match($pattern, $v);
     }
 }
 
@@ -114,7 +114,7 @@ if (!function_exists('verify_phone')) {
     function verify_phone(string $v)
     {
         $pattern = '/^1\d{10}$/';
-        return preg_match($pattern, $v) ? true : false;
+        return preg_match($pattern, $v);
     }
 }
 

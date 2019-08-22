@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Logic\Login;
+use App\Logic\LogInOut\Login;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller

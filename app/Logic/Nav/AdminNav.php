@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Repository;
 
-use Illuminate\Database\Eloquent\Model;
+namespace App\Logic\Nav;
 
-class LeftNav extends Model
+
+use App\Model\LeftNav;
+
+class AdminNav
 {
     /**
      * navList 获取菜单栏及权限集合
@@ -18,7 +20,7 @@ class LeftNav extends Model
      */
     public function navList($params = array())
     {
-        $mode = new \App\Model\LeftNav;
+        $mode = new LeftNav();
         $list = $mode
             ->when(!empty($params['ids']), function ($query) use ($params) {
                 if (!is_array($params['ids']))

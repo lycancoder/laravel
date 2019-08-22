@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Model\FontIcon;
 use App\Http\Controllers\Controller;
-use App\Vendor\Captcha\Captcha;
+use App\Service\Captcha\Captcha;
 
 class PublicController extends Controller
 {

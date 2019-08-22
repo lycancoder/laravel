@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Logic\Timer;
+use App\Logic\Datetime\Timer;
 use App\Model\Config;
 use Illuminate\Http\Request;
 

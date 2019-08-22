@@ -9,7 +9,7 @@
  * Time: 20:17
  */
 
-namespace App\Vendor\Captcha;
+namespace App\Service\Captcha;
 
 class Captcha
 {

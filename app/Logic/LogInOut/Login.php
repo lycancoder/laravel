@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Logic;
+namespace App\Logic\LogInOut;
 
 use App\Model\File;
 use App\Model\User;
 use App\Model\UserGroup;
 use App\Model\UserLoginLog;
-use App\Repository\LeftNav;
+use App\Logic\Nav\AdminNav;
 
 /**
  * 用户登录操作处理
  * Class Login
- * @package App\Logic
+ * @package App\Logic\LogInOut
  */
 Class Login
 {
@@ -33,7 +33,7 @@ Class Login
             return return_code(101, '账号或密码错误');
 
         // 获取所有菜单及权限
-        $nav = new LeftNav();
+        $nav = new AdminNav();
         $retNav = $nav->navList();
         $navArr = $retNav['data'];
 
@@ -106,7 +106,7 @@ Class Login
         $userData['nav_ids'] = $groupInfo['nav_ids'];
 
         # 获取所拥有的权限
-        $leftNav = new LeftNav();
+        $leftNav = new AdminNav();
         $navArr = $leftNav->navList(['ids' => $groupInfo['nav_ids']]);
         $navArr = $navArr['data'];
 

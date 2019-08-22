@@ -1,14 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Lycan
- * Date: 2019/5/4
- * Time: 16:15
+ * Swoole相关逻辑处理
  */
 
-namespace App\Logic;
+namespace App\Service\Swoole;
 
-use App\Vendor\RedisClient;
+use App\Service\Redis\RedisClient;
 
 class Swoole
 {

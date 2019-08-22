@@ -7,7 +7,7 @@
  * Time: 22:52
  */
 
-namespace App\Vendor;
+namespace App\Service\Juhe;
 
 class JuheSms
 {
