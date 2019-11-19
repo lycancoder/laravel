@@ -275,16 +275,13 @@ if (!function_exists("download_file")) {
     function download_file($resource, $saveFile)
     {
         try {
-            // 目录不存在创建目录
             $dirname = dirname($path);
             if (!is_dir($dirname)) mkdir($dirname, 0777, true);
 
-            // 打开文件
             $source_file = fopen($resource, 'rb');
             $save_file = fopen($saveFile, 'a');
 
             while (!feof($source_file)) {
-                // 每次读取指定长度的数据写入文件，降低
                 fwrite($save_file, fread($source_file, 4096));
             }
 
