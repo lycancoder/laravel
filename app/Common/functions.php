@@ -264,3 +264,38 @@ if (!function_exists("jh_recent_holiday")) {
         return array('code' => 0, 'msg' => "操作成功", 'data' => $data);
     }
 }
+
+if (!function_exists("download_file")) {
+    /**
+     * 分片段下载数据
+     * @param $resource string 资源[本地或网络]('https://www.baidu.com/download/test.txt')
+     * @param $saveFile string 保存('upload/test.txt')
+     * @return array
+     */
+    function download_file($resource, $saveFile)
+    {
+        try {
+            // 目录不存在创建目录
+            $dirname = dirname($path);
+            if (!is_dir($dirname)) mkdir($dirname, 0777, true);
+
+            // 打开文件
+            $source_file = fopen($resource, 'rb');
+            $save_file = fopen($saveFile, 'a');
+
+            while (!feof($source_file)) {
+                // 每次读取指定长度的数据写入文件，降低
+                fwrite($save_file, fread($source_file, 4096));
+            }
+
+            fclose($source_file);
+            fclose($save_file);
+
+            return ['code' => 0, 'data' => null, 'msg' => 'Success'];
+        } catch (\Exception $e) {
+            if (is_file($path)) unlink($path);
+
+            return ['code' => 1, 'data' => null, 'msg' => $e->getMessage()];
+        }
+    }
+}
